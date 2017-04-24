@@ -38,6 +38,30 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.jolbox/bonecp -->
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>0.8.0.RELEASE</version>
+        </dependency>
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.struts/struts2-core &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.struts</groupId>-->
+            <!--<artifactId>struts2-core</artifactId>-->
+            <!--<version>2.5.10.1</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.tiles/tiles-api &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tiles</groupId>-->
+            <!--<artifactId>tiles-api</artifactId>-->
+            <!--<version>3.0.7</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.struts/struts2-tiles-plugin &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.struts</groupId>-->
+            <!--<artifactId>struts2-tiles-plugin</artifactId>-->
+            <!--<version>2.5.10.1</version>-->
+        <!--</dependency>-->
 
     </dependencies>
     <build>

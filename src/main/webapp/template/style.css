@@ -1,0 +1,44 @@
+.pageName {
+    padding-bottom: 24px;
+    padding-top: 24px;
+}
+.image {
+    padding: 40px 0;
+    border: 1px solid rgba(0,0,0,0.3);
+}
+
+.noBorder {
+    border-width: 0px;
+}
+.image h1 {
+    color: rgba(0,0,0,0.3);
+}
+
+.catalogItem {
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+.spaceBefore70 {
+    padding-top: 50px;
+}
+
+.productNameBlock {
+    padding-top: 20px;
+}
+
+
+.fullDescription{
+    margin-top: 70px;
+    border-top: 1px solid rgba(0,0,0,0.3);
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.registrationForm {
+    max-width: 700px;
+    margin: auto;
+}
