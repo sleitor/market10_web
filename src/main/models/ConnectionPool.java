@@ -2,8 +2,8 @@ package main.models;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
+import org.apache.log4j.Logger;
 
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -11,11 +11,19 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Created by User on 21.04.2017.
+ * Класс для создания соединения с базой Данных
  */
 public class ConnectionPool  {
 
+    private static final Logger logger = Logger.getLogger(ConnectionPool.class);
+
     private static final ConnectionPool INSTANCE = new ConnectionPool();
+
+//    private static boolean isAlive = false;
+//
+//    public static boolean isIsAlive() {
+//        return isAlive;
+//    }
 
     private BoneCP boneCP;
 
@@ -40,8 +48,8 @@ public class ConnectionPool  {
             boneCP = new BoneCP(config);
 
         } catch (IOException | ClassNotFoundException | SQLException e){
-            e.printStackTrace();
-        }
+            logger.debug("Ошибка соединения с базой данных. Connection");
+    }
     }
 
     public Connection getConnection() throws SQLException {

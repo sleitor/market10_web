@@ -5,7 +5,7 @@ import main.models.pojo.OrderProduct;
 import java.util.UUID;
 
 /**
- * Created by User on 20.04.2017.
+ * Интерфейс обработки продуктов в заказе
  */
 public interface OrderProductServiceInterface extends ServiceInterface<Long, OrderProduct> {
 

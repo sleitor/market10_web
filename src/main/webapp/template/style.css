@@ -42,3 +42,15 @@
     max-width: 700px;
     margin: auto;
 }
+
+.bg-danger.error{
+    padding: 15px;
+}
+
+input.error {
+    border: 1px solid #ff0000;
+}
+label.error {
+    color: #ff0000;
+    font-weight: normal;
+}

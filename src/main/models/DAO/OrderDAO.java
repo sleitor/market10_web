@@ -7,9 +7,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 
-/**
- * Created by User on 20.04.2017.
- */
 public class OrderDAO implements OrderInterface {
     @Override
     public HashSet<Order> getAll() {

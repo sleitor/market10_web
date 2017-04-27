@@ -6,8 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 23.04.2017.
+ *  Фильтр для проверки прав на администратора
  */
+
 public class AdminFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -17,9 +18,13 @@ public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        Boolean admin = (Boolean) ((HttpServletRequest)servletRequest).getAttribute("userAdmin");
+        boolean a = false;
 
-        if (admin) {
+        if (((HttpServletRequest)servletRequest).getSession().getAttribute("userAdmin") != null) {
+            a = (boolean) ((HttpServletRequest) servletRequest).getSession().getAttribute("userAdmin");
+        }
+
+        if (a) {
             filterChain.doFilter(servletRequest,servletResponse);
         } else {
 

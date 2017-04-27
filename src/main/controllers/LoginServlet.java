@@ -1,12 +1,13 @@
 package main.controllers;
 
-import main.models.ConnectionPool;
 import main.models.pojo.User;
 import main.models.services.UserService;
 import main.models.services.UserServiceInterface;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,21 +15,36 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 20.04.2017.
+ * В данном классе хранятся методы для вызова формы логина, записи в сессию факта авторизации,
+ * роутинг в зависимости от прав пользователя и запуск процесса авторизации
  */
 public class LoginServlet extends HttpServlet {
-    static {
-        PropertyConfigurator.configure(LoginServlet.class.getClassLoader()
-        .getResource("log.properties"));
-    }
 
     private static final Logger logger = Logger.getLogger(LoginServlet.class);
 
-    private static UserServiceInterface userService = new UserService();
+    @Autowired
+    private UserServiceInterface userService;
+//    = new UserService();
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        if ("logout".equals(req.getParameter("action"))) {
+            logger.debug("Выходим из сессии");
+            req.getSession().invalidate();
+            resp.sendRedirect(req.getContextPath() + "/catalog");
+        } else {
+
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        }
+
     }
 
     @Override
@@ -36,21 +52,22 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        User user = userService.findUserByLoginAndPassword(login,password);
-        if (user != null ) {
+        User user = userService.findUserByLoginAndPassword(login, password);
+        if (user != null) {
             req.getSession().setAttribute("userLogin", login);
             req.getSession().setAttribute("userAdmin", user.isRole());
 
-            logger.debug("user " +login + " logged in");
+            logger.debug("user " + login + " logged in");
             if (user.isRole()) {
-                resp.sendRedirect(req.getContextPath()+ "/admin/orderList");
+                resp.sendRedirect(req.getContextPath() + "/admin/orderList");
             } else {
                 resp.sendRedirect(req.getContextPath() + "/cart");
             }
 
         } else {
-            logger.debug("user " +login + " error");
-            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            req.setAttribute("error", "Неверный логин/пароль");
+            logger.debug("user " + login + " error");
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
 }

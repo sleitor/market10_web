@@ -5,7 +5,7 @@ import main.models.DAO.DAOInterface;
 import java.util.Collection;
 
 /**
- * Created by User on 21.04.2017.
+ * Общий интерфейс для сервисов
  */
 public interface ServiceInterface<Type, Entity> {
 

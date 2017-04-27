@@ -12,11 +12,14 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by User on 22.04.2017.
+ * В данном классе хранятся методы для вызова корзины и добавления в нее товаров.
+ * Так же здесь происходит обработка и формирование массива заказанных товаров
  */
 public class CartServlet extends HttpServlet {
 
     private static ProductServiceInterface productService = new ProductService();
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -31,7 +34,6 @@ public class CartServlet extends HttpServlet {
 
             Long id = Long.parseLong(req.getParameter("id"));
             if (id > 0) {
-//                int b = cart.get(id);
                 if (cart.containsKey(id)) {
                     Integer a = cart.get(id);
                     cart.put(id, ++a);
@@ -51,7 +53,6 @@ public class CartServlet extends HttpServlet {
 
             cartProduct.add(productService.getByID( (Long) entry.getKey()));
 
-//            entry.getValue();
         }
 
         req.getSession().setAttribute("cartProduct", cartProduct);

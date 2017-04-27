@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * Created by User on 21.04.2017.
+ * В данном классе хранятся методы для вызова каталога
  */
 public class CatalogServlet extends HttpServlet {
     @Override

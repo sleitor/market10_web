@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.UUID;
 
 /**
- * Created by User on 20.04.2017.
+ * Обработка товаров
  */
 public class ProductService implements ProductServiceInterface {
     private static ProductInterface productDAO = new ProductDAO();

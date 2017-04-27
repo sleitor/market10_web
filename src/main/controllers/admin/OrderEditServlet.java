@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 22.04.2017.
+ * В данном классе хранятся методы для вызова и обработки формы редактирования заказов
  */
 public class OrderEditServlet extends HttpServlet {
     @Override

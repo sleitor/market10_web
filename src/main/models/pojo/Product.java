@@ -1,10 +1,5 @@
 package main.models.pojo;
 
-import java.util.UUID;
-
-/**
- * Created by User on 20.04.2017.
- */
 public class Product {
 
     private long uuid;

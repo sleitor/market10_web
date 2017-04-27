@@ -1,11 +1,7 @@
 package main.models.pojo;
 
 import java.sql.Date;
-import java.util.UUID;
 
-/**
- * Created by User on 20.04.2017.
- */
 public class Order {
 
     private long uuid;

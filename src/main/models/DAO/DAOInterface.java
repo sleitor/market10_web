@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Created by User on 21.04.2017.
+ * Общий DAO интерфейс
  */
 public interface DAOInterface<Type, Entity> {
 

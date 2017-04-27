@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 23.04.2017.
+ * В данном классе хранятся методы для вызова страницы продукта
  */
 public class ProductServlet extends HttpServlet {
     private static ProductServiceInterface productService = new ProductService();

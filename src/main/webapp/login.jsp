@@ -2,10 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% request.setAttribute("title", "Логин");%>
-<c:import url='template/header.html' charEncoding='utf-8'/>
+<c:import url='template/header.jsp' charEncoding='utf-8'/>
 <h2 class="pageName"></h2>
 
-    <form class="form-signin" method="post">
+    <form class="form-signin" method="post" action="login">
+        <c:if test="${error != null}"><div class="bg-danger"><c:out value="${error}"></c:out></div></c:if>
         <h2 class="form-signin-heading">Пожалуйста, авторизуйтесь</h2>
         <label for="inputLogin" class="sr-only">login</label>
         <input type="text" name="login" id="inputLogin" class="form-control" placeholder="login" required="" autofocus="">

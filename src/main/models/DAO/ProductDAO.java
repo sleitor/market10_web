@@ -13,9 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * Created by User on 20.04.2017.
- */
+
 public class ProductDAO implements ProductInterface {
     @Override
     public Set<Product> getAll() {

@@ -7,10 +7,23 @@ import main.models.pojo.User;
 import java.util.Collection;
 
 /**
- * Created by User on 20.04.2017.
+ * Обработка пользователей
  */
+
+
 public class UserService implements UserServiceInterface{
-    private static UserInterface userDAO = new UserDAO();
+
+    public void setUserDAO(UserInterface userDAO) {
+
+        this.userDAO = userDAO;
+    }
+
+    public UserInterface getUserDAO() {
+        return userDAO;
+    }
+
+
+    private UserInterface userDAO;
 
     @Override
     public Collection<User> getAll() {

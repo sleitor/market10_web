@@ -5,7 +5,7 @@ import main.models.pojo.User;
 import java.util.UUID;
 
 /**
- * Created by User on 20.04.2017.
+ * DAO интерфейс пользователей
  */
 public interface UserInterface extends DAOInterface<Long, User> {
 

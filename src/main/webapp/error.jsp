@@ -13,8 +13,10 @@
 </head>
 <body>
 
-Ошибка доступа.
 
-<c:out value="${sessionScope.userAdmin}"></c:out>
+Ошибка доступа.<br>
+<c:out value="${requestScope.error}"></c:out>
+
+
 </body>
 </html>

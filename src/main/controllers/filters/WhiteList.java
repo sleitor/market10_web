@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 22.04.2017.
+ * фильтр на авторизацию
  */
 public class WhiteList implements Filter {
     @Override
@@ -22,7 +22,8 @@ public class WhiteList implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         }
         else {
-            ((HttpServletResponse)servletResponse).sendRedirect(((HttpServletRequest)servletRequest).getContextPath() + "/login");
+            servletRequest.getRequestDispatcher("login.jsp").forward(servletRequest,servletResponse);
+//            ((HttpServletResponse)servletResponse).sendRedirect(((HttpServletRequest)servletRequest).getContextPath() + "/login");
         }
     }
 

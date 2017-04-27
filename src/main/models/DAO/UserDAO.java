@@ -10,11 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.UUID;
 
-/**
- * Created by User on 20.04.2017.
- */
+
 public class UserDAO implements UserInterface {
     @Override
     public HashSet<User> getAll() {

@@ -2,63 +2,77 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% request.setAttribute("title", "Kaталог");%>
-<c:import url='template/header.html' charEncoding='utf-8'/>
+<c:import url='template/header.jsp' charEncoding='utf-8'/>
 
-<div class="registrationForm">
-    <br>
-    <h1>Регистрация</h1>
-    <br>
-    <br>
+<c:if test="${userLogin != null}"><h1>Вы уже зарегистрированы.</h1> <a href="catalog"><h3>Вернуться в каталог</h3>
+</a></c:if>
+<c:if test="${userLogin == null}">
 
-    <form class="form-horizontal" method="post">
-        <div class="form-group">
-            <label for="userName" class="col-sm-2 control-label">login</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="userName" name="userName" placeholder="login" required="">
+    <div class="registrationForm">
+        <br>
+        <h1>Регистрация</h1>
+        <br>
+        <c:if test="${error != null}"><div class="bg-danger"><c:out value="${error}"></c:out></div></c:if>
+        <br>
+        <form class="form-horizontal" method="post">
+            <div class="form-group">
+                <label for="userName" class="col-sm-2 control-label">login</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="userName" name="userName" placeholder="login"
+                           required="" pattern="[a-zA-Z\d]{3,15}" title="Только латиница и цифры. Длинна строки должна быть от 3 до 15 символов">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">email</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" name="email" id="email" placeholder="E-mail" required="">
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="E-mail" required=""
+                           pattern="^\S+@\S+\.\S+$" title="Введите правильный email">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="firstName" class="col-sm-2 control-label">Имя</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Имя" required="">
+            <div class="form-group">
+                <label for="firstName" class="col-sm-2 control-label">Имя</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Имя"
+                           required="" pattern="[\D]{2,50}" title="Длинна строки должна быть от 2 до 50 символов. Цифры недопустимы.">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="secondName" class="col-sm-2 control-label">Отчество</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="secondName" id="secondName" placeholder="Отчество" required="">
+            <div class="form-group">
+                <label for="secondName" class="col-sm-2 control-label">Отчество</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="secondName" id="secondName" placeholder="Отчество"
+                           required="" pattern="[\D]{2,50}" title="Длинна строки должна быть от 2 до 50 символов. Цифры недопустимы.">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="lastName" class="col-sm-2 control-label">Фамилия</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Фамилия" required="">
+            <div class="form-group">
+                <label for="lastName" class="col-sm-2 control-label">Фамилия</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Фамилия"
+                           required="" pattern="[\D]{2,50}" title="Длинна строки должна быть от 2 до 50 символов. Цифры недопустимы.">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="address" class="col-sm-2 control-label">Адрес</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="address" id="address" placeholder="Адрес" required="">
+            <div class="form-group">
+                <label for="address" class="col-sm-2 control-label">Адрес</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="address" id="address" placeholder="Адрес" required=""
+                           pattern="[\S., ]{5,150}" title="Длинна строки должна быть от 5 до 150 символов">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-2 control-label">Пароль</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Пароль" required="">
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Пароль</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Пароль"
+                           required="" maxlength="350" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$"
+                           title="Пароль должен содердать минимум 1 латинскую букву и цифру. Длинна пароля от 8 до 16 символов">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Регистрация</button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Регистрация</button>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+
+</c:if>
 
 <%@ include file="template/footer.html" %>

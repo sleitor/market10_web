@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 /**
- * Created by User on 20.04.2017.
+ * Обработка заказа
  */
 public class OrderService implements OrderServiceInterface {
     private static OrderInterface orderDAO = new OrderDAO();

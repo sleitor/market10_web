@@ -5,7 +5,7 @@ import main.models.pojo.Product;
 import java.util.UUID;
 
 /**
- * Created by User on 20.04.2017.
+ * DAO интерфейс продуктов
  */
 public interface ProductInterface extends DAOInterface<Long, Product> {
 }

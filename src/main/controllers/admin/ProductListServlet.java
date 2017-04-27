@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 22.04.2017.
+ * В данном классе хранятся методы для отображения списка продуктов
  */
 public class ProductListServlet extends HttpServlet {
     @Override

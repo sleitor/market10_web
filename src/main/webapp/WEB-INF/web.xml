@@ -7,6 +7,14 @@
     <!--<listener>-->
     <!--<listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>-->
     <!--</listener>-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/beans.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <listener>
         <listener-class>main.controllers.listener.AppStartListener</listener-class>
     </listener>
@@ -104,10 +112,11 @@
     <filter-name>AdminFilter</filter-name>
     <filter-class>main.controllers.filters.AdminFilter</filter-class>
 </filter>
-    <!--<filter-mapping>-->
-        <!--<filter-name>AdminFilter</filter-name>-->
-        <!--<url-pattern>/admin/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>WhiteList</filter-name>
         <filter-class>main.controllers.filters.WhiteList</filter-class>
@@ -120,4 +129,34 @@
         <filter-name>WhiteList</filter-name>
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>isAliveFilter</filter-name>
+        <filter-class>main.controllers.filters.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>isAliveFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>isAliveFilter</filter-name>-->
+        <!--<url-pattern>/catalog</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>isAliveFilter</filter-name>-->
+        <!--<url-pattern>/login</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>isAliveFilter</filter-name>-->
+        <!--<url-pattern>/registration</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>isAliveFilter</filter-name>-->
+        <!--<url-pattern>/cart</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>isAliveFilter</filter-name>-->
+        <!--<url-pattern>/product</url-pattern>-->
+    <!--</filter-mapping>-->
+
+
 </web-app>

@@ -3,7 +3,7 @@ package main.models.services;
 import main.models.pojo.User;
 
 /**
- * Created by User on 20.04.2017.
+ * Интерфейс обработки пользователей
  */
 public interface UserServiceInterface extends ServiceInterface<Long, User> {
 

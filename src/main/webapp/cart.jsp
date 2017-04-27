@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% request.setAttribute("title", "Kaталог");%>
-<c:import url='template/header.html' charEncoding='utf-8'/>
+<c:import url='template/header.jsp' charEncoding='utf-8'/>
 
 <h2 class="pageName">Корзина</h2>
 
@@ -29,6 +29,7 @@
                 <div class="col-md-3">
                     <h4>
                         <smal>Желаемое количество:</smal>
+
                         <c:out value="${sessionScope.cart.get['1']}"></c:out>
                         <small> шт.</small>
                     </h4>
@@ -37,7 +38,7 @@
                         <c:out value="${item.cost}"></c:out>
                         <small> руб.</small>
                     </h3>
-                    <button type="button" class="btn btn-primary">Купить</button>
+                    <button type="button" class="btn btn-primary">Добавить</button>
                 </div>
 
             </div>
