@@ -25,12 +25,13 @@ public class UserDAO implements UserInterface {
     @Override
     public boolean create(User user){
 
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(
-                        "INSERT INTO users(userName, email, firstName, secondName, lastName, address, password)VALUES (?,?,?,?,?,?,?)"
-                );
-        ) {
+        try {
+
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO users(userName, email, firstName, secondName, lastName, address, password)VALUES (?,?,?,?,?,?,?)"
+            );
+
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getFirstName());

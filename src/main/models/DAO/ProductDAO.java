@@ -19,11 +19,11 @@ public class ProductDAO implements ProductInterface {
         Set<Product> products = new HashSet<>();
         ;
 
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement preparedStatement =
-                        connection.prepareStatement("SELECT * FROM products");
-        ) {
+        try {
+
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SELECT * FROM products");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -50,10 +50,10 @@ public class ProductDAO implements ProductInterface {
     @Override
     public Product getByID(Long id) {
 
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE uuid=?")
-        ) {
+        try {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE uuid=?");
+
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             Product product = null;

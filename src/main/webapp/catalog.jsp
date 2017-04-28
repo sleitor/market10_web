@@ -4,9 +4,14 @@
 <% request.setAttribute("title", "Kaталог");%>
 <c:import url='template/header.jsp' charEncoding='utf-8'/>
 <%--Session: <%=request.getSession()%><br>--%>
-
+<%
+    String add = (String) request.getAttribute("add");
+%>
 <h2 class="pageName">Каталог товаров:</h2>
 <div class="container-fluid catalogItems">
+    <%--<c:if test="${add != null}"><div class="bg-info"><c:out value="${add}"/></div></c:if>--%>
+    <c:if test="${requestScope.add != null}"><div class="bg-info"><c:out value="${requestScope.add}"/> requestScope</div></c:if>
+    <c:if test="${pageScope.add != null}"><div class="bg-info"><c:out value="${pageScope.add}"/> pageScope</div></c:if>
     <c:forEach items="${requestScope.products}" var="product">
         <div class="row catalogItem">
             <div class="col-md-3 text-center">
@@ -15,18 +20,18 @@
                 </div>
             </div>
             <div class="col-md-6 productNameBlock">
-                <h3><a href="product?id=${product.uuid}"><c:out value="${product.name}"></c:out></a></h3>
-                <h4><c:out value="${product.description}"></c:out></h4>
+                <h3><a href="product?id=${product.uuid}"><c:out value="${product.name}"/></a></h3>
+                <h4><c:out value="${product.description}"/></h4>
             </div>
             <div class="col-md-3">
                 <h4>
                     <smal>Количество:</smal>
-                    <c:out value="${product.quantity}"></c:out>
+                    <c:out value="${product.quantity}"/>
                     <small> шт.</small>
                 </h4>
                 <h3>
                     <smal>Цена:</smal>
-                    <c:out value="${product.cost}"></c:out>
+                    <c:out value="${product.cost}"/>
                     <small> руб.</small>
                 </h3>
                 <button type="button" class="btn btn-primary"

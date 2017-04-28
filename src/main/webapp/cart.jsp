@@ -30,7 +30,7 @@
                     <h4>
                         <smal>Желаемое количество:</smal>
 
-                        <c:out value="${sessionScope.cart.get[1]}"></c:out>
+                        <c:out value="${sessionScope.cart.get(item.uuid)}"></c:out>
                         <small> шт.</small>
                     </h4>
                     <h3>
