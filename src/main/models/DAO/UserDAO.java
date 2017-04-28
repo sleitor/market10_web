@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashSet;
 
 
@@ -24,7 +23,7 @@ public class UserDAO implements UserInterface {
     }
 
     @Override
-    public boolean create(User user) {
+    public boolean create(User user){
 
         try (
                 Connection connection = ConnectionPool.getInstance().getConnection();

@@ -1,7 +1,5 @@
 package main.models.services;
 
-import main.models.DAO.DAOInterface;
-
 import java.util.Collection;
 
 /**

@@ -1,18 +1,21 @@
 package main.models.services;
 
-import main.models.DAO.ProductDAO;
 import main.models.DAO.ProductInterface;
 import main.models.pojo.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.UUID;
 
 /**
  * Обработка товаров
  */
+
+@Service
 public class ProductService implements ProductServiceInterface {
-    private static ProductInterface productDAO = new ProductDAO();
+
+    @Autowired
+    private ProductInterface productDAO;
 
     @Override
     public Collection<Product> getAll() {

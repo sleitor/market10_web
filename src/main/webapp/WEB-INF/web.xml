@@ -4,9 +4,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
     <display-name>Archetype Created Web Application</display-name>
-    <!--<listener>-->
-    <!--<listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>-->
-    <!--</listener>-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>WEB-INF/beans.xml</param-value>
@@ -121,26 +118,22 @@
         <filter-name>WhiteList</filter-name>
         <filter-class>main.controllers.filters.WhiteList</filter-class>
     </filter>
-    <!--<filter-mapping>-->
-        <!--<filter-name>WhiteList</filter-name>-->
-        <!--<url-pattern>/cart</url-pattern>-->
-    <!--</filter-mapping>-->
     <filter-mapping>
         <filter-name>WhiteList</filter-name>
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>isAliveFilter</filter-name>
-        <filter-class>main.controllers.filters.AdminFilter</filter-class>
+        <filter-class>main.controllers.filters.IsAliveFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>isAliveFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
-    <!--<filter-mapping>-->
-        <!--<filter-name>isAliveFilter</filter-name>-->
-        <!--<url-pattern>/catalog</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter-mapping>
+        <filter-name>isAliveFilter</filter-name>
+        <url-pattern>/catalog</url-pattern>
+    </filter-mapping>
     <!--<filter-mapping>-->
         <!--<filter-name>isAliveFilter</filter-name>-->
         <!--<url-pattern>/login</url-pattern>-->

@@ -1,23 +1,34 @@
 package main.controllers;
 
 import main.models.pojo.Product;
-import main.models.services.ProductService;
 import main.models.services.ProductServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * В данном классе хранятся методы для вызова корзины и добавления в нее товаров.
  * Так же здесь происходит обработка и формирование массива заказанных товаров
  */
 public class CartServlet extends HttpServlet {
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
 
-    private static ProductServiceInterface productService = new ProductService();
+    @Autowired
+    private ProductServiceInterface productService;
 
 
     @Override
@@ -51,7 +62,7 @@ public class CartServlet extends HttpServlet {
 
         for (Map.Entry entry : cart.entrySet()) {
 
-            cartProduct.add(productService.getByID( (Long) entry.getKey()));
+                cartProduct.add(productService.getByID( (Long) entry.getKey()));
 
         }
 

@@ -1,7 +1,6 @@
 package main.controllers;
 
 import main.models.pojo.User;
-import main.models.services.UserService;
 import main.models.services.UserServiceInterface;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +52,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         User user = userService.findUserByLoginAndPassword(login, password);
+
         if (user != null) {
             req.getSession().setAttribute("userLogin", login);
             req.getSession().setAttribute("userAdmin", user.isRole());

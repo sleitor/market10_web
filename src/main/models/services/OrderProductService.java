@@ -5,8 +5,6 @@ import main.models.DAO.OrderProductInterface;
 import main.models.pojo.OrderProduct;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.UUID;
 
 /**
  * Обработка товаров для заказа
@@ -16,7 +14,7 @@ public class OrderProductService implements OrderProductInterface {
     private static OrderProductInterface orderProductDAO = new OrderProductDAO();
 
     @Override
-    public Collection<OrderProduct> getAll() {
+    public Collection<OrderProduct> getAll(){
         return orderProductDAO.getAll();
     }
 

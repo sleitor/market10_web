@@ -2,21 +2,20 @@ package main.models.DAO;
 
 import main.models.ConnectionPool;
 import main.models.pojo.Product;
+import org.springframework.stereotype.Component;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
-
+@Component
 public class ProductDAO implements ProductInterface {
     @Override
-    public Set<Product> getAll() {
+    public Set<Product> getAll(){
         Set<Product> products = new HashSet<>();
         ;
 

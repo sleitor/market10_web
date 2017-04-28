@@ -1,11 +1,12 @@
 package main.controllers;
 
 import main.models.pojo.User;
-import main.models.services.UserService;
 import main.models.services.UserServiceInterface;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,15 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(LoginServlet.class);
-    private static UserServiceInterface userService = new UserService();
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+    }
+
+    @Autowired
+    private UserServiceInterface userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,14 +52,14 @@ public class RegisterServlet extends HttpServlet {
                 false
         );
 
-        if (userService.create(user)){
-            logger.debug("Регистрация завершена!");
-            resp.sendRedirect(req.getContextPath() + "/cart");
-        } else {
-            logger.debug("Ошибка регистрации!");
-            req.setAttribute("error", "Ошибка регистрации. Такой пользователь уже существует!");
-            req.getRequestDispatcher("/registration.jsp").forward(req, resp);
-        }
+            if (userService.create(user)){
+                logger.debug("Регистрация завершена!");
+                resp.sendRedirect(req.getContextPath() + "/cart");
+            } else {
+                logger.debug("Ошибка регистрации!");
+                req.setAttribute("error", "Ошибка регистрации. Такой пользователь уже существует!");
+                req.getRequestDispatcher("/registration.jsp").forward(req, resp);
+            }
 
 
     }

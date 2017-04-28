@@ -1,6 +1,5 @@
 package main.models.services;
 
-import main.models.DAO.UserDAO;
 import main.models.DAO.UserInterface;
 import main.models.pojo.User;
 

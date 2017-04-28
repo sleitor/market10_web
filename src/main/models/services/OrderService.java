@@ -5,7 +5,6 @@ import main.models.DAO.OrderInterface;
 import main.models.pojo.Order;
 
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * Обработка заказа

@@ -13,17 +13,17 @@ import java.util.Properties;
 /**
  * Класс для создания соединения с базой Данных
  */
-public class ConnectionPool  {
+public class ConnectionPool {
 
     private static final Logger logger = Logger.getLogger(ConnectionPool.class);
 
     private static final ConnectionPool INSTANCE = new ConnectionPool();
 
-//    private static boolean isAlive = false;
-//
-//    public static boolean isIsAlive() {
-//        return isAlive;
-//    }
+    private static boolean isAlive = true;
+
+    public static boolean isIsAlive() {
+        return isAlive;
+    }
 
     private BoneCP boneCP;
 
@@ -34,7 +34,7 @@ public class ConnectionPool  {
     private ConnectionPool() {
         Properties dbProperties = new Properties();
         try (InputStream is = ConnectionPool.class.getClassLoader()
-        .getResourceAsStream("database.properties")) {
+                .getResourceAsStream("database.properties")) {
             dbProperties.load(is);
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -47,13 +47,24 @@ public class ConnectionPool  {
             config.setPartitionCount(1);
             boneCP = new BoneCP(config);
 
-        } catch (IOException | ClassNotFoundException | SQLException e){
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            isAlive = false;
             logger.debug("Ошибка соединения с базой данных. Connection");
-    }
+        }
     }
 
-    public Connection getConnection() throws SQLException {
-        return boneCP.getConnection();
+    public Connection getConnection() {
+
+        try {
+            if (isAlive) {
+                return boneCP.getConnection();
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            isAlive = false;
+            logger.debug("Ошибка соединения с базой данных. getConnection");
+        }
+        return null;
     }
 
 

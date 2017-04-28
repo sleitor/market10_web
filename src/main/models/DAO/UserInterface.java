@@ -2,8 +2,6 @@ package main.models.DAO;
 
 import main.models.pojo.User;
 
-import java.util.UUID;
-
 /**
  * DAO интерфейс пользователей
  */

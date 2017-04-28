@@ -30,7 +30,7 @@
                     <h4>
                         <smal>Желаемое количество:</smal>
 
-                        <c:out value="${sessionScope.cart.get['1']}"></c:out>
+                        <c:out value="${sessionScope.cart.get[1]}"></c:out>
                         <small> шт.</small>
                     </h4>
                     <h3>
@@ -43,7 +43,12 @@
 
             </div>
         </c:forEach>
+        <div class="row">
+            <div class="col-md-offset-8 col-md-3"> <button type="button" class="btn btn-success btn-block">Оформить заказ</button></div>
+        </div>
     </div>
+
+
 </c:if>
 
 
