@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<% request.setAttribute("title", "Логин");%>
+<% request.setAttribute("title", "Главная страница");%>
 <c:import url='template/header.jsp' charEncoding='utf-8'/>
 <h2 class="pageName"></h2>
 

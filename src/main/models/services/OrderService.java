@@ -3,12 +3,14 @@ package main.models.services;
 import main.models.DAO.OrderDAO;
 import main.models.DAO.OrderInterface;
 import main.models.pojo.Order;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 /**
  * Обработка заказа
  */
+@Service
 public class OrderService implements OrderServiceInterface {
     private static OrderInterface orderDAO = new OrderDAO();
 

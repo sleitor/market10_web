@@ -42,8 +42,8 @@ public class ConnectionPool {
             config.setJdbcUrl(dbProperties.getProperty("url"));
             config.setUsername(dbProperties.getProperty("user"));
             config.setPassword(dbProperties.getProperty("password"));
-            config.setMinConnectionsPerPartition(5);
-            config.setMaxConnectionsPerPartition(10);
+            config.setMinConnectionsPerPartition(1);
+            config.setMaxConnectionsPerPartition(1);
             config.setPartitionCount(1);
             boneCP = new BoneCP(config);
 

@@ -4,50 +4,46 @@ import main.models.pojo.User;
 import main.models.services.UserServiceInterface;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.SessionScope;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
+ * Контроллер, отвечающий за страницу логина
  * В данном классе хранятся методы для вызова формы логина, записи в сессию факта авторизации,
  * роутинг в зависимости от прав пользователя и запуск процесса авторизации
  */
-public class LoginServlet extends HttpServlet {
 
-    private static final Logger logger = Logger.getLogger(LoginServlet.class);
+@Controller
+public class LoginController {
+
+    private final static Logger logger = Logger.getLogger(LoginController.class);
 
     @Autowired
     private UserServiceInterface userService;
-//    = new UserService();
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-                config.getServletContext());
-    }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String showLogin(HttpServletRequest req,
+                            @RequestParam(value = "action", required = false) String action){
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        if ("logout".equals(req.getParameter("action"))) {
+        if ("logout".equals(action)) {
             logger.debug("Выходим из сессии");
+            new SessionScope();
             req.getSession().invalidate();
-            resp.sendRedirect(req.getContextPath() + "/catalog");
+            return "redirect:catalog";
         } else {
-
-            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            return "login";
         }
 
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    private String auth(HttpServletRequest req) {
+
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
@@ -59,15 +55,17 @@ public class LoginServlet extends HttpServlet {
 
             logger.debug("user " + login + " logged in");
             if (user.isRole()) {
-                resp.sendRedirect(req.getContextPath() + "/admin/orderList");
+                return "redirect:admin/orderList";
             } else {
-                resp.sendRedirect(req.getContextPath() + "/cart");
+                return "redirect:cart";
             }
 
         } else {
             req.setAttribute("error", "Неверный логин/пароль");
             logger.debug("user " + login + " error");
-            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            return "login";
         }
+
     }
+
 }

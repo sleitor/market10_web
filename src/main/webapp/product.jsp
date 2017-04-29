@@ -5,7 +5,7 @@
 <c:import url='template/header.jsp' charEncoding='utf-8'/>
 <div class="row">
     <div class="col-sm-offset-1 col-sm-10">
-        <h1><c:out value="${product.name}"></c:out></h1>
+        <h1><c:out value="${product.name}"/></h1>
         <div class="row spaceBefore70">
             <div class="col-md-3 text-center">
                 <div class="image">
@@ -14,7 +14,7 @@
 
                 <h4>
                     <smal>Количество:</smal>
-                    <c:out value="${product.quantity}"></c:out>
+                    <c:out value="${product.quantity}"/>
                     <small> шт.</small>
                 </h4>
             </div>
@@ -22,7 +22,7 @@
             <div class=" col-md-offset-6 col-md-3 text-right">
                 <h3>
                     <smal>Цена:</smal>
-                    <c:out value="${product.cost}"></c:out>
+                    <c:out value="${product.cost}"/>
                     <small> руб.</small>
                 </h3>
                 <button type="button" class="btn btn-primary"
@@ -35,7 +35,7 @@
 
         <div class="row fullDescription">
 
-            <h4 class="col-md-12"><c:out value="${product.description}"></c:out></h4>
+            <h4 class="col-md-12"><c:out value="${product.description}"/></h4>
         </div>
 
     </div>

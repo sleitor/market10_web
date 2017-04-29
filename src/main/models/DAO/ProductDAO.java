@@ -2,6 +2,7 @@ package main.models.DAO;
 
 import main.models.ConnectionPool;
 import main.models.pojo.Product;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -14,16 +15,18 @@ import java.util.Set;
 
 @Component
 public class ProductDAO implements ProductInterface {
+
+    private Logger logger = Logger.getLogger(ProductDAO.class);
+
     @Override
-    public Set<Product> getAll(){
+    public Set<Product> getAll() {
         Set<Product> products = new HashSet<>();
-        ;
 
-        try {
-
-            Connection connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * FROM products");
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("SELECT * FROM products");
+        ) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -33,16 +36,11 @@ public class ProductDAO implements ProductInterface {
                         resultSet.getString(3),
                         resultSet.getInt(4),
                         resultSet.getFloat(5));
-//                product.setUuid(UUID.fromString(resultSet.getString(1)));
-//                product.setName(resultSet.getString(2));
-//                product.setDescription(resultSet.getString(3));
-//                product.setQuantity(resultSet.getInt(4));
-//                product.setCost(resultSet.getFloat(5));
 
                 products.add(product);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.debug("Ошибка получения списка продуктов");
         }
         return products;
     }
@@ -50,15 +48,15 @@ public class ProductDAO implements ProductInterface {
     @Override
     public Product getByID(Long id) {
 
-        try {
-            Connection connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE uuid=?");
-
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE uuid=?")
+        ) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             Product product = null;
 
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 product = new Product(
                         resultSet.getLong(1),
                         resultSet.getString(2),
@@ -71,7 +69,7 @@ public class ProductDAO implements ProductInterface {
             return product;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.debug("Ошибка получения пролукта");
         }
 
         throw new NotImplementedException();
@@ -79,16 +77,58 @@ public class ProductDAO implements ProductInterface {
 
     @Override
     public boolean create(Product product) {
-        throw new NotImplementedException();
+
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO products (name, description, quantity, cost) VALUES (?,?,?,?)");
+        ) {
+            statement.setString(1, product.getName());
+            statement.setString(2, product.getDescription());
+            statement.setInt(3, product.getQuantity());
+            statement.setFloat(4, product.getCost());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.debug("Ошибка создания продукта");
+        }
+
+        return true;
     }
 
     @Override
     public void update(Product product) {
 
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("UPDATE products SET name=?, description=?, quantity=?, cost=? WHERE uuid=?");
+        ) {
+
+            statement.setLong(5, product.getUuid());
+            statement.setString(1, product.getName());
+            statement.setString(2, product.getDescription());
+            statement.setInt(3, product.getQuantity());
+            statement.setFloat(4, product.getCost());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.debug("Ошибка обновления товара");
+        }
     }
 
     @Override
     public void deleteByID(Long id) {
+
+
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM products WHERE uuid=?");
+        ) {
+
+            statement.setLong(1,id);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.debug("Ошибка удаления товара");
+        }
 
     }
 }

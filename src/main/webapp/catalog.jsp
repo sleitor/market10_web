@@ -9,9 +9,10 @@
 %>
 <h2 class="pageName">Каталог товаров:</h2>
 <div class="container-fluid catalogItems">
-    <%--<c:if test="${add != null}"><div class="bg-info"><c:out value="${add}"/></div></c:if>--%>
-    <c:if test="${requestScope.add != null}"><div class="bg-info"><c:out value="${requestScope.add}"/> requestScope</div></c:if>
-    <c:if test="${pageScope.add != null}"><div class="bg-info"><c:out value="${pageScope.add}"/> pageScope</div></c:if>
+    <c:if test="${add != null}">
+        <div class="bg-info"><c:out value="${add}"/></div>
+        <% session.setAttribute("add", null);%>
+    </c:if>
     <c:forEach items="${requestScope.products}" var="product">
         <div class="row catalogItem">
             <div class="col-md-3 text-center">
