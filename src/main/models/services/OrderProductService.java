@@ -4,6 +4,7 @@ import main.models.DAO.OrderProductDAO;
 import main.models.DAO.OrderProductInterface;
 import main.models.pojo.OrderProduct;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -14,7 +15,7 @@ public class OrderProductService implements OrderProductInterface {
     private static OrderProductInterface orderProductDAO = new OrderProductDAO();
 
     @Override
-    public Collection<OrderProduct> getAll(){
+    public Collection<OrderProduct> getAll() {
         return orderProductDAO.getAll();
     }
 
@@ -36,5 +37,20 @@ public class OrderProductService implements OrderProductInterface {
     @Override
     public void deleteByID(Long id) {
         orderProductDAO.deleteByID(id);
+    }
+
+    @Override
+    public ArrayList<OrderProduct> getAllByOrder(Long id) {
+        return orderProductDAO.getAllByOrder(id);
+    }
+
+    @Override
+    public void deleteByOrderID(Long id) {
+        orderProductDAO.deleteByOrderID(id);
+    }
+
+    @Override
+    public void deleteByProductID(Long id) {
+        orderProductDAO.deleteByProductID(id);
     }
 }

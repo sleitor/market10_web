@@ -27,7 +27,7 @@ public class OrderDAO implements OrderInterface {
         ) {
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Order order = new Order(
                         resultSet.getLong(1),
                         resultSet.getLong(2),
@@ -47,6 +47,24 @@ public class OrderDAO implements OrderInterface {
 
     @Override
     public Order getByID(Long id) {
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE uuid=?");
+        ) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return new Order(
+                    resultSet.getLong(1),
+                    resultSet.getLong(2),
+                    resultSet.getDate(3),
+                    resultSet.getFloat(4),
+                    resultSet.getString(5)
+            );
+
+        } catch (SQLException e) {
+            logger.debug("Ошибка получения заказа по ID");
+        }
         throw new NotImplementedException();
     }
 
@@ -74,10 +92,32 @@ public class OrderDAO implements OrderInterface {
     @Override
     public void update(Order order) {
 
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("UPDATE orders SET cost=?, status=? WHERE uuid=?")
+        ) {
+
+            statement.setFloat(1, order.getCost());
+            statement.setString(2, order.getStatus());
+            statement.setLong(3, order.getUuid());
+            statement.executeUpdate();
+
+        } catch (Exception e) {
+            logger.debug("Ошибка обновления заказа");
+        }
     }
 
     @Override
     public void deleteByID(Long id) {
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE  FROM orders WHERE uuid=?")
+        ) {
+            statement.setLong(1, id);
+            statement.execute();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
