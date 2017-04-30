@@ -19,7 +19,7 @@
     <bean id="userDAObean" class="main.models.DAO.UserDAO"/>
 
 
-    <!--<mvc:resources mapping="/**" location="/template" cache-period="31556926"/>-->
+    <!--<mvc:resources mapping="/template/**" location="/template/" cache-period="31556926"/>-->
 
 
 

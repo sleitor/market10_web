@@ -45,8 +45,9 @@
 
         </div>
     </c:forEach>
-    <div class="row catalogItem">
-        <button type="submit" class="btn btn-success" onclick="window.location.href='<%=request.getContextPath()%>/admin/productEdit?action=add'">Добавить продукт</button>
+    <br>
+    <div class="row">
+        <button type="submit" class="btn btn-success col-md-offset-8" onclick="window.location.href='<%=request.getContextPath()%>/admin/productEdit?action=add'">Добавить продукт</button>
     </div>
 
 </div>

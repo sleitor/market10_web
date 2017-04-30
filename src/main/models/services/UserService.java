@@ -12,26 +12,24 @@ import java.util.Collection;
 
 public class UserService implements UserServiceInterface{
 
-    public void setUserDAO(UserInterface userDAO) {
+    private UserInterface userDAO;
 
+    public void setUserDAO(UserInterface userDAO) {
         this.userDAO = userDAO;
     }
 
-    public UserInterface getUserDAO() {
+    private UserInterface getUserDAO() {
         return userDAO;
     }
 
-
-    private UserInterface userDAO;
-
     @Override
     public Collection<User> getAll() {
-        return null;
+        return userDAO.getAll();
     }
 
     @Override
     public User getByID(Long id) {
-        return null;
+        return userDAO.getByID(id);
     }
 
     @Override
@@ -41,16 +39,26 @@ public class UserService implements UserServiceInterface{
 
     @Override
     public void update(User user) {
-
+        userDAO.update(user);
     }
 
     @Override
     public void deleteByID(Long id) {
-
+        userDAO.deleteByID(id);
     }
 
     @Override
     public User findUserByLoginAndPassword(String login, String password) {
         return userDAO.findUserByLoginAndPassword(login, password);
+    }
+
+    @Override
+    public boolean modifyAccess(Long id) {
+
+        User user = userDAO.getByID(id);
+        user.setRole(!user.isRole());
+        userDAO.update(user);
+
+        return false;
     }
 }

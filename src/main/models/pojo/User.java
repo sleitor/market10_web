@@ -16,6 +16,10 @@ public class User {
         return uuid;
     }
 
+    public void setRole(boolean role) {
+        this.role = role;
+    }
+
     public String getUserName() {
         return userName;
     }

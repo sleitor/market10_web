@@ -1,22 +1,15 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: User
-  Date: 23.04.2017
-  Time: 17:04
-  To change this template use File | Settings | File Templates.
---%>
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-
-
-Ошибка доступа.<br>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% request.setAttribute("title", "Страница с ошибкой");%>
+<c:import url='template/header.jsp' charEncoding='utf-8'/>
+<br>
+<br>
+<h1>Ошибка доступа.<br>
+    <small><a href="/market/">Главная страница</a></small>
+</h1>
+<br>
 <c:out value="${requestScope.error}"></c:out>
 
 
-</body>
-</html>
+<%@ include file="template/footer.html" %>
