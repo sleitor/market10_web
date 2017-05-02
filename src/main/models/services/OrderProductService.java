@@ -3,6 +3,7 @@ package main.models.services;
 import main.models.DAO.OrderProductDAO;
 import main.models.DAO.OrderProductInterface;
 import main.models.pojo.OrderProduct;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +11,8 @@ import java.util.Collection;
 /**
  * Обработка товаров для заказа
  */
-public class OrderProductService implements OrderProductInterface {
+@Service
+public class OrderProductService implements OrderProductServiceInterface {
 
     private static OrderProductInterface orderProductDAO = new OrderProductDAO();
 
@@ -25,7 +27,7 @@ public class OrderProductService implements OrderProductInterface {
     }
 
     @Override
-    public boolean create(OrderProduct orderProduct) {
+    public int create(OrderProduct orderProduct) {
         return orderProductDAO.create(orderProduct);
     }
 

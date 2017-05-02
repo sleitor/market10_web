@@ -1,5 +1,7 @@
 package main.models.pojo;
 
+import java.util.HashSet;
+
 public class User {
 
     private long uuid;
@@ -10,6 +12,7 @@ public class User {
     private String lastName;
     private String address;
     private String password;
+    private HashSet<Order> orders;
     private boolean role;
 
     public long getUuid() {

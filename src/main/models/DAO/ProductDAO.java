@@ -6,10 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -76,23 +73,27 @@ public class ProductDAO implements ProductInterface {
     }
 
     @Override
-    public boolean create(Product product) {
+    public int create(Product product) {
 
         try (
                 Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO products (name, description, quantity, cost) VALUES (?,?,?,?)");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO products (name, description, quantity, cost) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         ) {
             statement.setString(1, product.getName());
             statement.setString(2, product.getDescription());
             statement.setInt(3, product.getQuantity());
             statement.setFloat(4, product.getCost());
             statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
 
         } catch (SQLException e) {
             logger.debug("Ошибка создания продукта");
         }
 
-        return true;
+        return 0;
     }
 
     @Override

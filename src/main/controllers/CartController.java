@@ -1,9 +1,13 @@
 package main.controllers;
 
 import main.models.pojo.Order;
+import main.models.pojo.OrderProduct;
 import main.models.pojo.Product;
+import main.models.pojo.User;
+import main.models.services.OrderProductServiceInterface;
 import main.models.services.OrderServiceInterface;
 import main.models.services.ProductServiceInterface;
+import main.models.services.UserServiceInterface;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,13 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,13 +32,17 @@ public class CartController {
 
     Logger logger = Logger.getLogger(CartController.class);
 
+    private final OrderProductServiceInterface orderProductService;
     private final ProductServiceInterface productService;
     private final OrderServiceInterface orderService;
+    private final UserServiceInterface userService;
 
     @Autowired
-    public CartController(ProductServiceInterface productService, OrderServiceInterface orderService) {
+    public CartController(OrderProductServiceInterface orderProductService, ProductServiceInterface productService, OrderServiceInterface orderService, UserServiceInterface userService) {
+        this.orderProductService = orderProductService;
         this.productService = productService;
         this.orderService = orderService;
+        this.userService = userService;
     }
 
 
@@ -54,6 +58,7 @@ public class CartController {
             cart = temp;
         }
 
+
         if ("add".equals(action)) {
 
             if (id > 0) {
@@ -66,25 +71,47 @@ public class CartController {
             }
             req.getSession().setAttribute("cart", cart);
             req.getSession().setAttribute("add", "Товар добавлен в корзину");
-            return "redirect:catalog";
+            return "redirect:/catalog";
+
         } else if ("order".equals(action)) {
 
-            Set<Product> cartProduct = (HashSet<Product>) req.getSession().getAttribute("products");
+            Set<Product> cartProduct = (HashSet<Product>) req.getSession().getAttribute("cartProduct");
+            if (req.getSession().getAttribute("userLogin") == null) {
+                return "redirect:/registration";
+            }
 
+            User user = userService.findUserbyLogin(String.valueOf(req.getSession().getAttribute("userLogin")));
+            Float cost = 0f;
+            HashSet<OrderProduct> orderProducts = new HashSet<>();
             Order order = new Order(
                     0,
-                    0,
+                    user.getUuid(),
                     new Date(System.currentTimeMillis()),
-                    0,
-                    ""
+                    cost,
+                    "Новый"
             );
-            orderService.create(order);
+            int orderNum = orderService.create(order);
+            for (Product item : cartProduct) {
+                cost += item.getCost() * cart.get(item.getUuid());
+                OrderProduct orderProduct = new OrderProduct(
+                        0,
+                        orderNum,
+                        item.getUuid(),
+                        cart.get(item.getUuid()),
+                        item.getCost()
+                );
+                orderProductService.create(orderProduct);
+                orderProducts.add(orderProduct);
+            }
+//            order.setOrderProducts(orderProducts);
+            order.setCost(cost);
+            order.setUuid(orderNum);
+            orderService.update(order);
+            req.getSession().setAttribute("cart", new HashMap<Long, Integer>());
+            req.getSession().setAttribute("orderProducts", new HashSet<OrderProduct>());
+            req.getSession().setAttribute("add","Создан новый заказ. Спасибо!");
+            return "redirect:/catalog";
 
-
-//            for (Product item : cartProduct) {
-//            }
-
-            return "redirect:cart";
             //req.getSession().setAttribute("cartProduct", cartProduct);
 
 

@@ -16,4 +16,6 @@ public interface UserServiceInterface extends ServiceInterface<Long, User> {
      * @return boolean
      */
     boolean modifyAccess(Long id);
+
+    User findUserbyLogin(String login);
 }

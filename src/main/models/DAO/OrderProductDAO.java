@@ -3,16 +3,15 @@ package main.models.DAO;
 import main.models.ConnectionPool;
 import main.models.pojo.OrderProduct;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.zip.CheckedOutputStream;
 
+@Component
 public class OrderProductDAO implements OrderProductInterface {
     private Logger logger = Logger.getLogger(OrderProduct.class);
 
@@ -69,22 +68,26 @@ public class OrderProductDAO implements OrderProductInterface {
     }
 
     @Override
-    public boolean create(OrderProduct orderProduct) {
+    public int create(OrderProduct orderProduct) {
         try (
                 Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO orderProducts (uuid_order, uuid_product, `count`, cost) VALUES (?,?,?,?)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO orderProducts (uuid_order, uuid_product, `count`, cost) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setLong(1, orderProduct.getUuid_order());
-            statement.setLong(1, orderProduct.getUuid_product());
-            statement.setInt(1, orderProduct.getCount());
-            statement.setFloat(1, orderProduct.getCost());
-            return statement.execute();
+            statement.setLong(2, orderProduct.getUuid_product());
+            statement.setInt(3, orderProduct.getCount());
+            statement.setFloat(4, orderProduct.getCost());
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
 
         } catch (SQLException e) {
             logger.debug("Ошибка добавления товара к заказу");
         }
 
-        return false;
+        return 0;
     }
 
     @Override

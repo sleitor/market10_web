@@ -5,7 +5,7 @@
 <c:import url='../template/header.jsp' charEncoding='utf-8'/>
 <br>
 <h1>
-    <c:if test="${action == 'edit'}">Редактирование продуктов</c:if>
+    <c:if test="${action == 'edit'}">Редактирование продукта</c:if>
     <c:if test="${action == 'add'}">Создание продукта</c:if>
 
 </h1>

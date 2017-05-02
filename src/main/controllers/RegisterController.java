@@ -57,7 +57,7 @@ public class RegisterController {
                 false
         );
 
-        if (userService.create(user)) {
+        if (userService.create(user)>0) {
             logger.debug("Регистрация завершена!");
 
             logger.debug("Для удобства, сразу авторизуем пользователя");

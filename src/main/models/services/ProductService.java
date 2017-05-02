@@ -28,7 +28,7 @@ public class ProductService implements ProductServiceInterface {
     }
 
     @Override
-    public boolean create(Product product) {
+    public int create(Product product) {
         return productDAO.create(product);
     }
 

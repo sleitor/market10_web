@@ -6,10 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashSet;
 
 @Component
@@ -69,24 +66,28 @@ public class OrderDAO implements OrderInterface {
     }
 
     @Override
-    public boolean create(Order order) {
-
+    public int create(Order order) {
 
         try (
                 Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO  orders ( `uuid_user` ,  `date` ,  `cost` ) VALUES (?,?,?)");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO  orders ( `uuid_user` ,  `date` ,  `cost` ) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
         ) {
 
             statement.setLong(1, order.getUuid_user());
             statement.setDate(2, order.getDate());
-            statement.setFloat(2, order.getCost());
+            statement.setFloat(3, order.getCost());
             statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
 
         } catch (SQLException e) {
             logger.debug("Ошибка создания нового заказа");
         }
 
-        return false;
+        return 0;
     }
 
     @Override
@@ -117,7 +118,7 @@ public class OrderDAO implements OrderInterface {
             statement.execute();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug("Ошибка удаления заказа");
         }
     }
 }

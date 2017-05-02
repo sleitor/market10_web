@@ -11,7 +11,7 @@ public interface ServiceInterface<Type, Entity> {
 
     Entity getByID (Type id);
 
-    boolean create (Entity entity);
+    int create (Entity entity);
 
     void update (Entity entity);
 

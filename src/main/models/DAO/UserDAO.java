@@ -5,10 +5,7 @@ import main.models.pojo.User;
 import org.apache.log4j.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashSet;
 
 
@@ -79,28 +76,30 @@ public class UserDAO implements UserInterface {
     }
 
     @Override
-    public boolean create(User user) {
+    public int create(User user) {
 
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO users(userName, email, firstName, secondName, lastName, address, password)VALUES (?,?,?,?,?,?,?)");
+             PreparedStatement statement = connection.prepareStatement(
+                     "INSERT INTO users(userName, email, firstName, secondName, lastName, address, password)VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         ) {
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getFirstName());
-            preparedStatement.setString(4, user.getSecondName());
-            preparedStatement.setString(5, user.getLastName());
-            preparedStatement.setString(6, user.getAddress());
-            preparedStatement.setString(7, user.getPassword());
-            int co = preparedStatement.executeUpdate();
-            boolean rez = co == 1;
-            return rez;
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getSecondName());
+            statement.setString(5, user.getLastName());
+            statement.setString(6, user.getAddress());
+            statement.setString(7, user.getPassword());
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
 
         } catch (SQLException e) {
             logger.debug("Ошибка добавления пользователя");
         }
 
-        return false;
+        return 0;
     }
 
     @Override
@@ -151,6 +150,41 @@ public class UserDAO implements UserInterface {
 
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            if (resultSet.getLong(1) > 0) {
+                User user = new User(
+                        resultSet.getLong(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8),
+                        resultSet.getBoolean(9)
+                );
+
+                return user;
+            }
+
+
+        } catch (SQLException e) {
+            logger.debug("Ошибка поиска пользователя по логину и паролю");
+        }
+
+        return null;
+    }
+
+    @Override
+    public User findUserByLogin(String login) {
+        try (
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("SELECT * FROM users WHERE userName=?");
+        ) {
+
+            preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             if (resultSet.getLong(1) > 0) {

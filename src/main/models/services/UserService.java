@@ -33,7 +33,7 @@ public class UserService implements UserServiceInterface{
     }
 
     @Override
-    public boolean create(User user) {
+    public int create(User user) {
         return userDAO.create(user);
     }
 
@@ -61,4 +61,10 @@ public class UserService implements UserServiceInterface{
 
         return false;
     }
+
+    @Override
+    public User findUserbyLogin(String login){
+        return userDAO.findUserByLogin(login);
+    }
+
 }
