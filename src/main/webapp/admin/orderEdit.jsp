@@ -10,18 +10,15 @@
     <br>
     <form class="form-horizontal" method="post">
         <div class="form-group">
-            <label for="uuid" class="col-sm-2 control-label">ID</label>
+            <label class="col-sm-2 control-label">ID</label>
             <div class="col-sm-10">
-                <input type="text" name="uuid" class="form-control"id="uuid" value="${order.uuid}"
-                       placeholder="ID" pattern="[\D]{1,50}" disabled>
+                <p class="form-control-static">${order.uuid}</p>
             </div>
         </div>
         <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">ПОльзователь</label>
+            <label class="col-sm-2 control-label">Пользователь</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="description"
-                       value="${order.uuid_user}" placeholder="Пользователь" pattern="[\D]{1,50}"
-                       title="Длинна строки должна быть от 2 до 50 цифр." disabled>
+                <p class="form-control-static">${order.uuid_user}</p>
             </div>
         </div>
         <div class="form-group">
@@ -63,6 +60,8 @@
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="uuid" value="${order.uuid}">
+                <input type="hidden" name="uuid_name" value="${order.uuid_name}">
                 <button type="submit" class="btn btn-success">Сохранить</button>
             </div>
         </div>
