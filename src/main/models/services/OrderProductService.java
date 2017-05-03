@@ -3,6 +3,7 @@ package main.models.services;
 import main.models.DAO.OrderProductDAO;
 import main.models.DAO.OrderProductInterface;
 import main.models.pojo.OrderProduct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,7 +15,14 @@ import java.util.Collection;
 @Service
 public class OrderProductService implements OrderProductServiceInterface {
 
-    private static OrderProductInterface orderProductDAO = new OrderProductDAO();
+    private ProductServiceInterface productService = new ProductService();
+    private OrderProductInterface orderProductDAO = new OrderProductDAO();
+
+    @Autowired
+    public OrderProductService(ProductServiceInterface productService, OrderProductInterface orderProductDAO) {
+        this.productService = productService;
+        this.orderProductDAO = orderProductDAO;
+    }
 
     @Override
     public Collection<OrderProduct> getAll() {
@@ -23,7 +31,13 @@ public class OrderProductService implements OrderProductServiceInterface {
 
     @Override
     public OrderProduct getByID(Long id) {
-        return orderProductDAO.getByID(id);
+        OrderProduct orderProduct = orderProductDAO.getByID(id);
+        orderProduct.setName_product(
+                productService.getByID(
+                        orderProduct
+                                .getUuid_product())
+                        .getName());
+        return orderProduct;
     }
 
     @Override
@@ -43,7 +57,12 @@ public class OrderProductService implements OrderProductServiceInterface {
 
     @Override
     public ArrayList<OrderProduct> getAllByOrder(Long id) {
-        return orderProductDAO.getAllByOrder(id);
+        ArrayList<OrderProduct> orderProducts = orderProductDAO.getAllByOrder(id);
+        for (OrderProduct orderProduct : orderProducts) {
+            orderProduct.setName_product(
+                    productService.getByID(orderProduct.getUuid_product()).getName());
+        }
+        return orderProducts;
     }
 
     @Override
@@ -55,4 +74,5 @@ public class OrderProductService implements OrderProductServiceInterface {
     public void deleteByProductID(Long id) {
         orderProductDAO.deleteByProductID(id);
     }
+
 }
