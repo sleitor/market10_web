@@ -82,6 +82,7 @@
                 <input type="hidden" name="uuid" value="${order.uuid}">
                 <input type="hidden" name="uuid_user" value="${order.uuid_user}">
                 <input type="hidden" class="form-control" name="date" value="${order.date}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" class="form-control" name="cost" value="${order.cost}">
                 <button type="submit" class="btn btn-success">Сохранить</button>
             </div>

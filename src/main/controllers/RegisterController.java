@@ -61,8 +61,8 @@ public class RegisterController {
             logger.debug("Регистрация завершена!");
 
             logger.debug("Для удобства, сразу авторизуем пользователя");
-            req.getSession().setAttribute("userLogin", userName);
-            req.getSession().setAttribute("userAdmin", user.isRole());
+//            req.getSession().setAttribute("userLogin", userName);
+//            req.getSession().setAttribute("userAdmin", user.isRole());
 
             HashMap cart = new HashMap<>();
             HashMap temp = (HashMap) req.getSession().getAttribute("cart");

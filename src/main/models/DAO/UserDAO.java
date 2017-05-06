@@ -55,7 +55,7 @@ public class UserDAO implements UserInterface {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            User user = new User(
+            return new User(
                     resultSet.getLong(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -66,7 +66,6 @@ public class UserDAO implements UserInterface {
                     resultSet.getString(8),
                     resultSet.getBoolean(9)
             );
-            return user;
 
         } catch (SQLException e) {
             logger.debug("Ошибка получения пользователя");
@@ -77,7 +76,7 @@ public class UserDAO implements UserInterface {
 
     @Override
     public int create(User user) {
-
+        int id = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(
                      "INSERT INTO users(userName, email, firstName, secondName, lastName, address, password)VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -91,15 +90,18 @@ public class UserDAO implements UserInterface {
             statement.setString(7, user.getPassword());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
 
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+                PreparedStatement statement1 = connection.prepareStatement("INSERT INTO user_roles(login) VALUES (?)");
+                statement1.setString(1, user.getUserName());
+                statement1.executeUpdate();
+            }
         } catch (SQLException e) {
             logger.debug("Ошибка добавления пользователя");
         }
 
-        return 0;
+        return id;
     }
 
     @Override
@@ -153,7 +155,8 @@ public class UserDAO implements UserInterface {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             if (resultSet.getLong(1) > 0) {
-                User user = new User(
+
+                return new User(
                         resultSet.getLong(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -164,8 +167,6 @@ public class UserDAO implements UserInterface {
                         resultSet.getString(8),
                         resultSet.getBoolean(9)
                 );
-
-                return user;
             }
 
 
@@ -188,7 +189,8 @@ public class UserDAO implements UserInterface {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             if (resultSet.getLong(1) > 0) {
-                User user = new User(
+
+                return new User(
                         resultSet.getLong(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -199,8 +201,6 @@ public class UserDAO implements UserInterface {
                         resultSet.getString(8),
                         resultSet.getBoolean(9)
                 );
-
-                return user;
             }
 
 

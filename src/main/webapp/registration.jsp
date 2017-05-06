@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<% request.setAttribute("title", "Kaталог");%>
+<% request.setAttribute("title", "Регистрация");%>
 <c:import url='template/header.jsp' charEncoding='utf-8'/>
 
 <c:if test="${userLogin != null}"><h1>Вы уже зарегистрированы.</h1> <a href="catalog"><h3>Вернуться в каталог</h3>
@@ -67,6 +67,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-default">Регистрация</button>
                 </div>
             </div>

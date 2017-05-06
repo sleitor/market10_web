@@ -42,7 +42,7 @@
                     <li <c:if test="${pageContext.request.requestURI =='/market/catalog.jsp'}"> class="active" </c:if> >
                         <a href="<c:url value="/catalog"/>">Каталог</a></li>
                     <li <c:if test="${pageContext.request.requestURI =='/market/cart.jsp'}"> class="active" </c:if> ><a
-                            href="<c:url value="/cart"/>">Корзина(<%=((HashMap) session.getAttribute("cart")).size()%>
+                            href="<c:url value="/cart"/>">Корзина( <%=((HashMap) session.getAttribute("cart")).size()%>
                         )</a></li>
 
                     <security:authorize access="isAnonymous()">

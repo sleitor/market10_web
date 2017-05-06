@@ -45,13 +45,14 @@
             <label for="cost" class="col-sm-2 control-label">Цена</label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" name="cost" id="cost" value="${product.cost}"
-                       placeholder="Цена" required="" pattern="[\d]{1,4}" min="1" max="9000"
+                       placeholder="Цена" required="" pattern="[\d]{1,4}" min="1" max="9000" step="0.1"
                        title="Число. От 1 до 9000.">
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <input type="hidden" name="id"  value="${product.uuid}${id}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-success">Сохранить</button>
             </div>
         </div>

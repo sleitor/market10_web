@@ -33,9 +33,9 @@ public class ConnectionPool {
             config.setJdbcUrl(dbProperties.getProperty("url"));
             config.setUsername(dbProperties.getProperty("user"));
             config.setPassword(dbProperties.getProperty("password"));
-            config.setMinConnectionsPerPartition(1);
+            config.setMinConnectionsPerPartition(5);
             config.setMaxConnectionsPerPartition(10);
-            config.setPartitionCount(1);
+            config.setPartitionCount(5);
             boneCP = new BoneCP(config);
 
         } catch (IOException | ClassNotFoundException | SQLException e) {
