@@ -14,8 +14,16 @@ import java.util.Collection;
 @Service
 public class ProductService implements ProductServiceInterface {
 
-    @Autowired
     private ProductInterface productDAO;
+
+    @Autowired
+    public ProductService(ProductInterface productDAO) {
+        this.productDAO = productDAO;
+    }
+
+    public ProductService() {
+
+    }
 
     @Override
     public Collection<Product> getAll() {

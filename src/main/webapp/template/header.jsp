@@ -61,9 +61,10 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <security:authentication property="principal.username"/>
                     <c:if test="${userLogin != null}">
                         <li><a>Здравствуйте, <c:out value="${userLogin}"></c:out></a></li>
-                        <li class="active"><a href="/market/login?action=logout"><strong>Log Out</strong><span
+                        <li class="active"><a href="/market/logout"><strong>Log Out</strong><span
                                 class="sr-only">(current)</span></a></li>
                     </c:if>
                     <c:if test="${userLogin == null}">

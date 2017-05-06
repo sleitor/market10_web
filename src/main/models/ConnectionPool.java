@@ -20,16 +20,7 @@ public class ConnectionPool {
     private static final ConnectionPool INSTANCE = new ConnectionPool();
 
     private static boolean isAlive = true;
-
-    public static boolean isIsAlive() {
-        return isAlive;
-    }
-
     private BoneCP boneCP;
-
-    public static ConnectionPool getInstance() {
-        return INSTANCE;
-    }
 
     private ConnectionPool() {
         Properties dbProperties = new Properties();
@@ -43,7 +34,7 @@ public class ConnectionPool {
             config.setUsername(dbProperties.getProperty("user"));
             config.setPassword(dbProperties.getProperty("password"));
             config.setMinConnectionsPerPartition(1);
-            config.setMaxConnectionsPerPartition(1);
+            config.setMaxConnectionsPerPartition(10);
             config.setPartitionCount(1);
             boneCP = new BoneCP(config);
 
@@ -51,6 +42,14 @@ public class ConnectionPool {
             isAlive = false;
             logger.debug("Ошибка соединения с базой данных. Connection");
         }
+    }
+
+    public static boolean isIsAlive() {
+        return isAlive;
+    }
+
+    public static ConnectionPool getInstance() {
+        return INSTANCE;
     }
 
     public Connection getConnection() {

@@ -30,12 +30,11 @@ import java.util.Set;
 @Controller
 public class CartController {
 
-    Logger logger = Logger.getLogger(CartController.class);
-
     private final OrderProductServiceInterface orderProductService;
     private final ProductServiceInterface productService;
     private final OrderServiceInterface orderService;
     private final UserServiceInterface userService;
+    Logger logger = Logger.getLogger(CartController.class);
 
     @Autowired
     public CartController(OrderProductServiceInterface orderProductService, ProductServiceInterface productService, OrderServiceInterface orderService, UserServiceInterface userService) {
@@ -53,11 +52,11 @@ public class CartController {
                            @RequestParam(value = "action", required = false) String action) {
 
         HashMap<Long, Integer> cart = new HashMap<>();
-        HashMap<Long, Integer> temp = (HashMap) req.getSession().getAttribute("cart");
+        cart.putAll((HashMap) req.getSession().getAttribute("cart"));
+        /*HashMap<Long, Integer> temp = (HashMap) req.getSession().getAttribute("cart");
         if (temp != null) {
             cart = temp;
-        }
-
+        }*/
 
         if ("add".equals(action)) {
 

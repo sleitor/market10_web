@@ -2,7 +2,6 @@ package main.controllers;
 
 import main.models.services.ProductServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CatalogController {
 
+    private final ProductServiceInterface productService;
+
     @Autowired
-    private ProductServiceInterface productService;
+    public CatalogController(ProductServiceInterface productService) {
+        this.productService = productService;
+    }
 
     @RequestMapping(value = "/catalog", method = RequestMethod.GET)
     public String showCatalog(Model model, HttpServletRequest req) {
