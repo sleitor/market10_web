@@ -46,7 +46,11 @@
             </div>
         </c:forEach>
         <div class="row">
-            <div class="col-md-offset-8 col-md-3"> <button type="button" class="btn btn-success btn-block" onclick="window.location.href='<%=request.getContextPath()%>/cart?action=order'" >Оформить заказ</button></div>
+            <div class="col-md-offset-8 col-md-3">
+                <button type="button" class="btn btn-success btn-block"
+                        onclick="window.location.href='<%=request.getContextPath()%>/cart/order'">Оформить заказ
+                </button>
+            </div>
         </div>
     </div>
 

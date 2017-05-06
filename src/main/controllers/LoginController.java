@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 
 /**
  * Контроллер, отвечающий за страницу логина
@@ -32,6 +33,8 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
+            request.getSession().setAttribute("cart", new HashMap<Long, Integer>());
+//            request.getSession().setAttribute("cartProduct", new HashSet<Product>());
         }
         return "redirect:/login";
     }

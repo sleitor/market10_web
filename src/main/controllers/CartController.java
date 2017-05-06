@@ -51,14 +51,10 @@ public class CartController {
                            @RequestParam(value = "id", required = false) Long id,
                            @RequestParam(value = "action", required = false) String action) {
 
-        HashMap<Long, Integer> cart = new HashMap<>();
-        cart.putAll((HashMap) req.getSession().getAttribute("cart"));
-        /*HashMap<Long, Integer> temp = (HashMap) req.getSession().getAttribute("cart");
-        if (temp != null) {
-            cart = temp;
-        }*/
 
         if ("add".equals(action)) {
+            HashMap<Long, Integer> cart = new HashMap<>();
+            cart.putAll((HashMap) req.getSession().getAttribute("cart"));
 
             if (id > 0) {
                 if (cart.containsKey(id)) {
@@ -68,64 +64,66 @@ public class CartController {
                     cart.put(id, 1);
                 }
             }
+
             req.getSession().setAttribute("cart", cart);
             req.getSession().setAttribute("add", "Товар добавлен в корзину");
-            return "redirect:/catalog";
-
-        } else if ("order".equals(action)) {
-
-            Set<Product> cartProduct = (HashSet<Product>) req.getSession().getAttribute("cartProduct");
-            if (req.getSession().getAttribute("userLogin") == null) {
-                return "redirect:/registration";
-            }
-
-            User user = userService.findUserbyLogin(String.valueOf(req.getSession().getAttribute("userLogin")));
-            Float cost = 0f;
-            HashSet<OrderProduct> orderProducts = new HashSet<>();
-            Order order = new Order(
-                    0,
-                    user.getUuid(),
-                    new Date(System.currentTimeMillis()),
-                    cost,
-                    "Новый"
-            );
-            int orderNum = orderService.create(order);
-            for (Product item : cartProduct) {
-                cost += item.getCost() * cart.get(item.getUuid());
-                OrderProduct orderProduct = new OrderProduct(
-                        0,
-                        orderNum,
-                        item.getUuid(),
-                        cart.get(item.getUuid()),
-                        item.getCost()
-                );
-                orderProductService.create(orderProduct);
-                orderProducts.add(orderProduct);
-            }
-//            order.setOrderProducts(orderProducts);
-            order.setCost(cost);
-            order.setUuid(orderNum);
-            orderService.update(order);
-            req.getSession().setAttribute("cart", new HashMap<Long, Integer>());
-            req.getSession().setAttribute("orderProducts", new HashSet<OrderProduct>());
-            req.getSession().setAttribute("add","Создан новый заказ. Спасибо!");
-            return "redirect:/catalog";
-
-            //req.getSession().setAttribute("cartProduct", cartProduct);
-
-
-        } else {
 
             Set<Product> cartProduct = new HashSet<>();
             for (Map.Entry entry : cart.entrySet()) {
-
                 cartProduct.add(productService.getByID((Long) entry.getKey()));
             }
             req.getSession().setAttribute("cartProduct", cartProduct);
 
+            return "redirect:/catalog";
+
         }
 
         return "cart";
+    }
+
+    @RequestMapping(value = "/cart/order")
+    private String makeOrder(HttpServletRequest req) {
+
+        HashMap<Long, Integer> cart = new HashMap<>();
+        cart.putAll((HashMap<Long, Integer>) req.getSession().getAttribute("cart"));
+        Set<Product> cartProduct = (HashSet<Product>) req.getSession().getAttribute("cartProduct");
+        String sr = req.getUserPrincipal().getName();
+        User user = userService.findUserbyLogin(req.getUserPrincipal().getName());
+        Float cost = 0f;
+        Order order = new Order(
+                0,
+                user.getUuid(),
+                new Date(System.currentTimeMillis()),
+                cost,
+                "Новый"
+        );
+        int orderNum = orderService.create(order);
+        for (Product item : cartProduct) {
+            cost += item.getCost() * cart.get(item.getUuid());
+            OrderProduct orderProduct = new OrderProduct(
+                    0,
+                    orderNum,
+                    item.getUuid(),
+                    cart.get(item.getUuid()),
+                    item.getCost()
+            );
+            orderProductService.create(orderProduct);
+        }
+        order.setCost(cost);
+        order.setUuid(orderNum);
+        orderService.update(order);
+        req.getSession().setAttribute("cart", new HashMap<Long, Integer>());
+        req.getSession().setAttribute("orderProducts", new HashSet<OrderProduct>());
+        req.getSession().setAttribute("add", "Создан новый заказ. Спасибо!");
+        return "redirect:/catalog";
+
+    }
+
+    @RequestMapping(value = "/cart/clear")
+    private String clearCart(HttpServletRequest request) {
+        request.getSession().setAttribute("cart", new HashMap<Long, Integer>());
+        request.getSession().setAttribute("add", "Корзина очищена");
+        return "redirect:/catalog";
     }
 
 }
