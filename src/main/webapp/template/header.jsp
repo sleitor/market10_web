@@ -35,19 +35,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Магазин продуктов</a>
+                <a class="navbar-brand" href="<c:url value="/"/>">Магазин продуктов</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li <c:if test="${pageContext.request.requestURI =='/market/catalog.jsp'}"> class="active" </c:if> >
-                        <a href="/market/catalog">Каталог</a></li>
+                        <a href="<c:url value="/catalog"/>">Каталог</a></li>
                     <li <c:if test="${pageContext.request.requestURI =='/market/cart.jsp'}"> class="active" </c:if> ><a
-                            href="/market/cart">Корзина(<%=((HashMap) session.getAttribute("cart")).size()%>)</a></li>
+                            href="<c:url value="/cart"/>">Корзина(<%=((HashMap) session.getAttribute("cart")).size()%>
+                        )</a></li>
 
                     <security:authorize access="isAnonymous()">
                         <li <c:if
                                 test="${pageContext.request.requestURI =='/market/registration.jsp'}"> class="active" </c:if> >
-                            <a href="/market/registration">Регистрация</a></li>
+                            <a href="<c:url value="/registration"/>">Регистрация</a></li>
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">
                         <li class="dropdown">
@@ -57,21 +58,21 @@
                             <ul class="dropdown-menu">
                                 <li <c:if
                                         test="${pageContext.request.requestURI =='/market/admin/productList.jsp'}"> class="active" </c:if> >
-                                    <a href="/market/admin/productList">Продукты</a></li>
+                                    <a href="<c:url value="/admin/productList"/>">Продукты</a></li>
                                 <li <c:if
-                                        test="${pageContext.request.requestURI =='/market/admin/productEdit'}"> class="active" </c:if> >
-                                    <a href="/market/admin/productEdit?action=add">Добавить продукт</a></li>
+                                        test="${pageContext.request.requestURI =='/market/admin/productEdit.jsp'}"> class="active" </c:if> >
+                                    <a href="<c:url value="/admin/productEdit?action=add"/>">Добавить продукт</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li <c:if
                                         test="${pageContext.request.requestURI =='/market/admin/orderList.jsp'}"> class="active" </c:if> >
-                                    <a href="/market/admin/orderList">Заказы</a></li>
-                                <li class="dropdown-header">Пользователи</li>
+                                    <a href="<c:url value="/admin/orderList"/>">Заказы</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li <c:if
                                         test="${pageContext.request.requestURI =='/market/admin/userList.jsp'}"> class="active" </c:if> >
-                                    <a href="/market/admin/userList">Список</a></li>
+                                    <a href="<c:url value="/admin/userList"/>">Список пользователей</a></li>
                                 <li <c:if
                                         test="${pageContext.request.requestURI =='/market/admin/userEdit.jsp'}"> class="active" </c:if> >
-                                    <a href="/market/admin/userEdit?action=add">Добавить</a></li>
+                                    <a href="<c:url value="/admin/userEdit?action=add"/>">Добавить пользователя</a></li>
                             </ul>
                         </li>
                     </security:authorize>
