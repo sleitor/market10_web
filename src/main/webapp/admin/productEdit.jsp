@@ -45,7 +45,7 @@
             <label for="cost" class="col-sm-2 control-label">Цена</label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" name="cost" id="cost" value="${product.cost}"
-                       placeholder="Цена" required="" pattern="[\d]{1,4}" min="1" max="9000" step="0.1"
+                       placeholder="Цена" required="" pattern="[\d]{1,4}" min="1" max="9000" step="0.05"
                        title="Число. От 1 до 9000.">
             </div>
         </div>

@@ -8,6 +8,15 @@ public class Product {
     private int quantity;
     private float cost;
 
+    public Product(long uuid, String name, String description, int quantity, float cost) {
+
+        this.uuid = uuid;
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.cost = cost;
+    }
+
     public long getUuid() {
         return uuid;
     }
@@ -28,13 +37,13 @@ public class Product {
         return cost;
     }
 
-    public Product(long uuid, String name, String description, int quantity, float cost) {
-
-        this.uuid = uuid;
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-        this.cost = cost;
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof Product && uuid == ((Product) obj).uuid;
     }
 
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

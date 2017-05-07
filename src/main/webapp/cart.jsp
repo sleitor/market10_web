@@ -9,9 +9,6 @@
     <div class="row spaceBefore70"><h4 class="col-md-offset-1 col-md-10">Корзина пуста.</h4></div>
 </c:if>
 <c:if test="${sessionScope.cart.size() > 0}">
-    <%--<% HashMap<Long,Integer> cart = (HashMap) request.getSession().getAttribute("cart");%>--%>
-    <%--id1: <%=cart.get(1)%><br>--%>
-    <%--id2: <%=cart.get(2)%><br>--%>
     <div class="container-fluid catalogItems">
         <c:if test="${add != null}">
             <div class="bg-info"><c:out value="${add}"/></div>
@@ -24,7 +21,7 @@
                         <h1>No image</h1>
                     </div>
                 </div>
-                <div class="col-md-6 productNameBlock">
+                <div class="col-md-5 productNameBlock">
                     <h3><c:out value="${item.name}"/></h3>
                     <h4><c:out value="${item.description}"/></h4>
                 </div>
@@ -41,6 +38,11 @@
                         <small> руб.</small>
                     </h3>
                     <button type="button" class="btn btn-primary" onclick="window.location.href='<%=request.getContextPath()%>/cart?id=${item.uuid}&action=add'">Добавить</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger"
+                            onclick="window.location.href='<%=request.getContextPath()%>/cart/remove?id=${item.uuid}'">X
+                    </button>
                 </div>
 
             </div>

@@ -46,10 +46,10 @@ public class CartController {
 
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public String showCart(Model model,
-                           HttpServletRequest req,
-                           @RequestParam(value = "id", required = false) Long id,
-                           @RequestParam(value = "action", required = false) String action) {
+    private String showCart(Model model,
+                            HttpServletRequest req,
+                            @RequestParam(value = "id", required = false) Long id,
+                            @RequestParam(value = "action", required = false) String action) {
 
 
         if ("add".equals(action)) {
@@ -78,7 +78,35 @@ public class CartController {
 
         }
 
+
         return "cart";
+    }
+
+    @RequestMapping(value = "/cart/remove")
+    private String removeFromCart(HttpServletRequest req,
+                                  @RequestParam(value = "id") Long id) {
+
+        HashMap<Long, Integer> cart = new HashMap<>();
+        cart.putAll((HashMap) req.getSession().getAttribute("cart"));
+        if (cart.containsKey(id)) {
+            cart.remove(id);
+            req.getSession().setAttribute("cart", cart);
+            req.getSession().setAttribute("add", "Товар удален из корзины");
+
+            Set<Product> cartProduct = (HashSet) req.getSession().getAttribute("cartProduct");
+            Product product = productService.getByID(id);
+            boolean t = cartProduct.remove(product);
+            System.out.println(t);
+            req.getSession().setAttribute("cartProduct", cartProduct);
+
+        } else {
+            req.getSession().setAttribute("add", "Нет такого товара в корзине!");
+        }
+        if (cart.size() == 0) {
+            return "redirect:/catalog";
+        }
+
+        return "redirect:/cart";
     }
 
     @RequestMapping(value = "/cart/order")

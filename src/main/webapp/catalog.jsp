@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% request.setAttribute("title", "Kaталог");%>
 <c:import url='template/header.jsp' charEncoding='utf-8'/>
-<%--Session: <%=request.getSession()%><br>--%>
 <%
     String add = (String) request.getAttribute("add");
 %>
