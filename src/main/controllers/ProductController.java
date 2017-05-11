@@ -23,11 +23,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-//    @RequestMapping(value = "/product", method = RequestMethod.GET)
-//    private String showCurrentProduct() {
-//        return "redirect:catalog";
-//    }
-
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     private String showCurrentProduct(Model model,
                                       @RequestParam(value = "id") Long id) {

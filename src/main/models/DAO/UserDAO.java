@@ -1,8 +1,11 @@
 package main.models.DAO;
 
+import main.controllers.HibernateUtil;
 import main.models.ConnectionPool;
+import main.models.entity.EntUsers;
 import main.models.pojo.User;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.*;
@@ -72,6 +75,34 @@ public class UserDAO implements UserInterface {
         }
 
         throw new NotImplementedException();
+    }
+
+    public int createHiber(User user) {
+        int id = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        session.beginTransaction();
+        EntUsers entUser = new EntUsers();
+
+//        StudyGroupEntity group = session.find(StudyGroupEntity.class, student.getGroup_id());
+
+        entUser.setUserName(user.getUserName());
+        entUser.setEmail(user.getEmail());
+        entUser.setFirstName(user.getFirstName());
+        entUser.setSecondName(user.getSecondName());
+        entUser.setLastName(user.getLastName());
+        entUser.setAddress(user.getAddress());
+        entUser.setPassword(user.getPassword());
+        entUser.setEnabled(1);
+
+        session.save(entUser);
+        session.getTransaction().commit();
+
+        session.close();
+
+
+        return id;
+
     }
 
     @Override

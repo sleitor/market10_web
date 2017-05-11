@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://server.w-bit.ru:3306/demo</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</property>
+        <property name="connection.username">demo</property>
+        <property name="connection.password">q1w2e3r45</property>
+        <property name="show_sql">true</property>
+
+        <mapping class="main.models.entity.EntOrderProducts"/>
+        <mapping class="main.models.entity.EntOrders"/>
+        <mapping class="main.models.entity.EntProducts"/>
+        <mapping class="main.models.entity.EntUserRoles"/>
+        <mapping class="main.models.entity.EntUsers"/>
+
+
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

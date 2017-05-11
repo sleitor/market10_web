@@ -15,12 +15,20 @@ public class User {
     private HashSet<Order> orders;
     private boolean role;
 
-    public long getUuid() {
-        return uuid;
+    public User(long uuid, String userName, String email, String firstName, String secondName, String lastName, String address, String password, boolean role) {
+        this.uuid = uuid;
+        this.userName = userName;
+        this.email = email;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.lastName = lastName;
+        this.address = address;
+        this.password = password;
+        this.role = role;
     }
 
-    public void setRole(boolean role) {
-        this.role = role;
+    public long getUuid() {
+        return uuid;
     }
 
     public String getUserName() {
@@ -55,15 +63,12 @@ public class User {
         return role;
     }
 
-    public User(long uuid, String userName, String email, String firstName, String secondName, String lastName, String address, String password, boolean role) {
-        this.uuid = uuid;
-        this.userName = userName;
-        this.email = email;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.address = address;
-        this.password = password;
+    public void setRole(boolean role) {
         this.role = role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(uuid);
     }
 }

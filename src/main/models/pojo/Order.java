@@ -2,7 +2,6 @@ package main.models.pojo;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Order {
 
@@ -14,12 +13,21 @@ public class Order {
     private float cost;
     private String status;
 
-    public void setCost(float cost) {
+    public Order(long uuid, long uuid_user, Date date, float cost, String status) {
+        this.uuid = uuid;
+
+        this.uuid_user = uuid_user;
+        this.date = date;
         this.cost = cost;
+        this.status = status;
     }
 
     public long getUuid() {
         return uuid;
+    }
+
+    public void setUuid(long uuid) {
+        this.uuid = uuid;
     }
 
     public long getUuid_user() {
@@ -34,28 +42,24 @@ public class Order {
         return cost;
     }
 
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
     public String getStatus() {
         return status;
     }
 
-    public void setOrderProducts(ArrayList<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
-
-    public Order(long uuid, long uuid_user, Date date, float cost, String status) {
-        this.uuid = uuid;
-
-        this.uuid_user = uuid_user;
-        this.date = date;
-        this.cost = cost;
-        this.status = status;
+    @Override
+    public int hashCode() {
+        return Long.hashCode(uuid) * 32;
     }
 
     public ArrayList<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setUuid(long uuid) {
-        this.uuid = uuid;
+    public void setOrderProducts(ArrayList<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 }

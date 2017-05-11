@@ -43,7 +43,7 @@ public class RegisterController {
             @RequestParam(value = "lastName") String lastName,
             @RequestParam(value = "address") String address,
             @RequestParam(value = "password") String password) {
-
+// TODO @ModelAttribute http://www.baeldung.com/spring-mvc-and-the-modelattribute-annotation
         logger.debug("Try register user: " + userName);
         User user = new User(
                 0,
