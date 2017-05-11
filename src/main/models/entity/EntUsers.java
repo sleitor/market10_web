@@ -20,7 +20,7 @@ public class EntUsers {
     private int role;
     private int enabled;
     private Collection<EntOrders> ordersByUuid;
-    private EntUserRoles userRolesByUserName;
+    private Collection<EntUserRoles> userRolesByUserName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -103,15 +103,15 @@ public class EntUsers {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "role", nullable = false)
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
+//    @Basic
+//    @Column(name = "role", nullable = false)
+//    public int getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(int role) {
+//        this.role = role;
+//    }
 
     @Basic
     @Column(name = "enabled", nullable = false)
@@ -168,13 +168,13 @@ public class EntUsers {
         this.ordersByUuid = ordersByUuid;
     }
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "userName", referencedColumnName = "login")
-    public EntUserRoles getUserRolesByUserName() {
+    public Collection<EntUserRoles> getUserRolesByUserName() {
         return userRolesByUserName;
     }
 
-    public void setUserRolesByUserName(EntUserRoles userRolesByUserName) {
+    public void setUserRolesByUserName(Collection<EntUserRoles> userRolesByUserName) {
         this.userRolesByUserName = userRolesByUserName;
     }
 }

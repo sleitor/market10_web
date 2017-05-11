@@ -7,8 +7,8 @@ import java.util.Collection;
  * Created by User on 10.05.2017.
  */
 @Entity
-@Table(name = "products", schema = "demo", catalog = "")
-public class EntProducts {
+@Table(name = "products", schema = "demo")
+public class EntProduct {
     private long uuid;
     private String name;
     private String description;
@@ -72,7 +72,7 @@ public class EntProducts {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EntProducts that = (EntProducts) o;
+        EntProduct that = (EntProduct) o;
 
         if (uuid != that.uuid) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;

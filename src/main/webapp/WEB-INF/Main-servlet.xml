@@ -9,6 +9,7 @@
 
     <import resource="Security-Config.xml"/>
     <import resource="spring-database.xml"/>
+    <import resource="jpa-config.xml"/>
 
 
     <context:component-scan base-package="main"/>

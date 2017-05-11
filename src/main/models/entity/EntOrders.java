@@ -8,10 +8,9 @@ import java.util.Collection;
  * Created by User on 10.05.2017.
  */
 @Entity
-@Table(name = "orders", schema = "demo", catalog = "")
+@Table(name = "orders", schema = "demo")
 public class EntOrders {
     private long uuid;
-    private long uuidUser;
     private Date date;
     private Double cost;
     private String status;
@@ -27,16 +26,6 @@ public class EntOrders {
 
     public void setUuid(long uuid) {
         this.uuid = uuid;
-    }
-
-    @Basic
-    @Column(name = "uuid_user", nullable = false)
-    public long getUuidUser() {
-        return uuidUser;
-    }
-
-    public void setUuidUser(long uuidUser) {
-        this.uuidUser = uuidUser;
     }
 
     @Basic
@@ -77,7 +66,6 @@ public class EntOrders {
         EntOrders entOrders = (EntOrders) o;
 
         if (uuid != entOrders.uuid) return false;
-        if (uuidUser != entOrders.uuidUser) return false;
         if (date != null ? !date.equals(entOrders.date) : entOrders.date != null) return false;
         if (cost != null ? !cost.equals(entOrders.cost) : entOrders.cost != null) return false;
         if (status != null ? !status.equals(entOrders.status) : entOrders.status != null) return false;
@@ -88,7 +76,6 @@ public class EntOrders {
     @Override
     public int hashCode() {
         int result = (int) (uuid ^ (uuid >>> 32));
-        result = 31 * result + (int) (uuidUser ^ (uuidUser >>> 32));
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);

@@ -7,7 +7,7 @@ import java.util.Collection;
  * Created by User on 10.05.2017.
  */
 @Entity
-@Table(name = "user_roles", schema = "demo", catalog = "")
+@Table(name = "user_roles", schema = "demo")
 public class EntUserRoles {
     private long uuid;
     private String login;
@@ -67,7 +67,8 @@ public class EntUserRoles {
         return result;
     }
 
-    @OneToMany(mappedBy = "userRolesByUserName")
+    @ManyToMany /*(mappedBy = "userRolesByUserName")*/
+    @JoinColumn(name = "login", referencedColumnName = "userName")
     public Collection<EntUsers> getUserRolesByUserName() {
         return userRolesByUserName;
     }

@@ -14,27 +14,28 @@ public class EntOrderProducts {
     private Double cost;
     private long uuid;
     private EntOrders ordersByUuidOrder;
-    private EntProducts productsByUuidProduct;
+    private EntProduct productsByUuidProduct;
 
-    @Basic
-    @Column(name = "uuid_order", nullable = false)
-    public long getUuidOrder() {
-        return uuidOrder;
-    }
 
-    public void setUuidOrder(long uuidOrder) {
-        this.uuidOrder = uuidOrder;
-    }
+//    @Basic
+//    @Column(name = "uuid_order", nullable = false)
+//    public long getUuidOrder() {
+//        return uuidOrder;
+//    }
+//
+//    public void setUuidOrder(long uuidOrder) {
+//        this.uuidOrder = uuidOrder;
+//    }
 
-    @Basic
-    @Column(name = "uuid_product", nullable = false)
-    public long getUuidProduct() {
-        return uuidProduct;
-    }
-
-    public void setUuidProduct(long uuidProduct) {
-        this.uuidProduct = uuidProduct;
-    }
+//    @Basic
+//    @Column(name = "uuid_product", nullable = false)
+//    public long getUuidProduct() {
+//        return uuidProduct;
+//    }
+//
+//    public void setUuidProduct(long uuidProduct) {
+//        this.uuidProduct = uuidProduct;
+//    }
 
     @Basic
     @Column(name = "count", nullable = true)
@@ -105,11 +106,11 @@ public class EntOrderProducts {
 
     @ManyToOne
     @JoinColumn(name = "uuid_product", referencedColumnName = "uuid", nullable = false)
-    public EntProducts getProductsByUuidProduct() {
+    public EntProduct getProductsByUuidProduct() {
         return productsByUuidProduct;
     }
 
-    public void setProductsByUuidProduct(EntProducts productsByUuidProduct) {
+    public void setProductsByUuidProduct(EntProduct productsByUuidProduct) {
         this.productsByUuidProduct = productsByUuidProduct;
     }
 }
