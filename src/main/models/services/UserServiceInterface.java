@@ -7,7 +7,7 @@ import main.models.pojo.User;
  */
 public interface UserServiceInterface extends ServiceInterface<Long, User> {
 
-    User findUserByLoginAndPassword(String login, String password);
+//    User findUserByLoginAndPassword(String login, String password);
 
     /**
      * Производит поиск пользователя по id.  Меняет права прользователя не противоположные Возвращает результат выполнения операции.

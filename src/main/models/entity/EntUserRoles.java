@@ -8,19 +8,27 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_roles", schema = "demo")
 public class EntUserRoles {
-    private long uuid;
+    private Long uuid;
     private String login;
     private String roles;
-    private EntUsers userRolesByUserName;
+    private EntUser userRolesByUserName;
+
+    public EntUserRoles() {
+    }
+
+    public EntUserRoles(String login, String roles) {
+        this.login = login;
+        this.roles = roles;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "uuid", nullable = false)
-    public long getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
-    public void setUuid(long uuid) {
+    public void setUuid(Long uuid) {
         this.uuid = uuid;
     }
 
@@ -66,13 +74,13 @@ public class EntUserRoles {
         return result;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY) /*(mappedBy = "userRolesByUserName")*/
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "login", referencedColumnName = "userName", insertable = false, updatable = false)
-    public EntUsers getUserRolesByUserName() {
+    public EntUser getUserRolesByUserName() {
         return userRolesByUserName;
     }
 
-    public void setUserRolesByUserName(EntUsers userRolesByUserName) {
+    public void setUserRolesByUserName(EntUser userRolesByUserName) {
         this.userRolesByUserName = userRolesByUserName;
     }
 }

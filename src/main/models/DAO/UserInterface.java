@@ -1,13 +1,13 @@
 package main.models.DAO;
 
-import main.models.pojo.User;
+import main.models.entity.EntUser;
 
 /**
  * DAO интерфейс пользователей
  */
-public interface UserInterface extends DAOInterface<Long, User> {
+public interface UserInterface extends DAOInterface<Long, EntUser> {
 
-    User findUserByLoginAndPassword(String login, String password);
+//    EntUser findUserByLoginAndPassword(String login, String password);
 
-    User findUserByLogin(String login);
+    EntUser findUserByLogin(String login);
 }

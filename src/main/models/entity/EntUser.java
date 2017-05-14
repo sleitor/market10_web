@@ -1,6 +1,7 @@
 package main.models.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -8,8 +9,8 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "users", schema = "demo")
-public class EntUsers {
-    private long uuid;
+public class EntUser implements Serializable {
+    private Long uuid;
     private String userName;
     private String email;
     private String firstName;
@@ -22,14 +23,17 @@ public class EntUsers {
     private Collection<EntOrders> ordersByUuid;
     private Collection<EntUserRoles> userRolesByUserName;
 
+    public EntUser() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uuid", nullable = false)
-    public long getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
-    public void setUuid(long uuid) {
+    public void setUuid(Long uuid) {
         this.uuid = uuid;
     }
 
@@ -128,18 +132,18 @@ public class EntUsers {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EntUsers EntUsers = (EntUsers) o;
+        EntUser EntUser = (EntUser) o;
 
-        if (uuid != EntUsers.uuid) return false;
-        if (role != EntUsers.role) return false;
-        if (enabled != EntUsers.enabled) return false;
-        if (userName != null ? !userName.equals(EntUsers.userName) : EntUsers.userName != null) return false;
-        if (email != null ? !email.equals(EntUsers.email) : EntUsers.email != null) return false;
-        if (firstName != null ? !firstName.equals(EntUsers.firstName) : EntUsers.firstName != null) return false;
-        if (secondName != null ? !secondName.equals(EntUsers.secondName) : EntUsers.secondName != null) return false;
-        if (lastName != null ? !lastName.equals(EntUsers.lastName) : EntUsers.lastName != null) return false;
-        if (address != null ? !address.equals(EntUsers.address) : EntUsers.address != null) return false;
-        if (password != null ? !password.equals(EntUsers.password) : EntUsers.password != null) return false;
+        if (uuid != EntUser.uuid) return false;
+        if (role != EntUser.role) return false;
+        if (enabled != EntUser.enabled) return false;
+        if (userName != null ? !userName.equals(EntUser.userName) : EntUser.userName != null) return false;
+        if (email != null ? !email.equals(EntUser.email) : EntUser.email != null) return false;
+        if (firstName != null ? !firstName.equals(EntUser.firstName) : EntUser.firstName != null) return false;
+        if (secondName != null ? !secondName.equals(EntUser.secondName) : EntUser.secondName != null) return false;
+        if (lastName != null ? !lastName.equals(EntUser.lastName) : EntUser.lastName != null) return false;
+        if (address != null ? !address.equals(EntUser.address) : EntUser.address != null) return false;
+        if (password != null ? !password.equals(EntUser.password) : EntUser.password != null) return false;
 
         return true;
     }
@@ -167,7 +171,7 @@ public class EntUsers {
         this.ordersByUuid = ordersByUuid;
     }
 
-    @OneToMany(mappedBy = "userRolesByUserName")
+    @OneToMany(mappedBy = "userRolesByUserName", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Collection<EntUserRoles> getUserRolesByUserName() {
         return userRolesByUserName;
     }

@@ -76,6 +76,8 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <c:if test="${user.userName == null}"><input type="userName" name="uuid"
+                                                             value="${user.uuid}${id}"></c:if>
                 <input type="hidden" name="uuid" value="${user.uuid}${id}">
                 <button type="submit" class="btn btn-default col-md-offset-8">Сохранить</button>
             </div>

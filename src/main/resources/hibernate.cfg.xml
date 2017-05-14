@@ -28,7 +28,7 @@
         <mapping class="main.models.entity.EntOrders"/>
         <mapping class="main.models.entity.EntProduct"/>
         <mapping class="main.models.entity.EntUserRoles"/>
-        <mapping class="main.models.entity.EntUsers"/>
+        <mapping class="main.models.entity.EntUser"/>
 
 
         <!-- DB schema will be updated if needed -->

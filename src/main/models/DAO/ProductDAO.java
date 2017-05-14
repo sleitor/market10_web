@@ -58,21 +58,6 @@ public class ProductDAO implements ProductInterface {
     public void update(EntProduct product) {
 
         manager.merge(product);
-
-//        try (
-//                Connection connection = ConnectionPool.getInstance().getConnection();
-//                PreparedStatement statement = connection.prepareStatement("UPDATE products SET name=?, description=?, quantity=?, cost=? WHERE uuid=?");
-//        ) {
-//
-//            statement.setLong(5, product.getUuid());
-//            statement.setString(1, product.getName());
-//            statement.setString(2, product.getDescription());
-//            statement.setInt(3, product.getQuantity());
-//            statement.setDouble(4, product.getCost());
-//            statement.executeUpdate();
-//        } catch (SQLException e) {
-//            logger.debug("Ошибка обновления товара");
-//        }
     }
 
     @Override

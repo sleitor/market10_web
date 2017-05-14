@@ -15,7 +15,7 @@ public class EntOrders {
     private Double cost;
     private String status;
     private Collection<EntOrderProducts> orderProductsByUuid;
-    private EntUsers usersByUuidUser;
+    private EntUser usersByUuidUser;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -93,11 +93,11 @@ public class EntOrders {
 
     @ManyToOne
     @JoinColumn(name = "uuid_user", referencedColumnName = "uuid", nullable = false)
-    public EntUsers getUsersByUuidUser() {
+    public EntUser getUsersByUuidUser() {
         return usersByUuidUser;
     }
 
-    public void setUsersByUuidUser(EntUsers usersByUuidUser) {
+    public void setUsersByUuidUser(EntUser usersByUuidUser) {
         this.usersByUuidUser = usersByUuidUser;
     }
 }

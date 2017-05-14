@@ -95,13 +95,13 @@ public class EntProduct implements Serializable {
         return result;
     }
 
-//    @OneToMany(mappedBy = "productsByUuidProduct",fetch = FetchType.LAZY)
-//    @Transient
-//    public Collection<EntOrderProducts> getOrderProductsByUuid() {
-//        return orderProductsByUuid;
-//    }
-//
-//    public void setOrderProductsByUuid(Collection<EntOrderProducts> orderProductsByUuid) {
-//        this.orderProductsByUuid = orderProductsByUuid;
-//    }
+    @OneToMany(mappedBy = "productsByUuidProduct", fetch = FetchType.LAZY)
+    @Transient
+    public Collection<EntOrderProducts> getOrderProductsByUuid() {
+        return orderProductsByUuid;
+    }
+
+    public void setOrderProductsByUuid(Collection<EntOrderProducts> orderProductsByUuid) {
+        this.orderProductsByUuid = orderProductsByUuid;
+    }
 }

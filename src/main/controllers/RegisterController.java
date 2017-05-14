@@ -46,7 +46,7 @@ public class RegisterController {
 // TODO @ModelAttribute http://www.baeldung.com/spring-mvc-and-the-modelattribute-annotation
         logger.debug("Try register user: " + userName);
         User user = new User(
-                0,
+                null,
                 userName,
                 email,
                 firstName,
@@ -60,7 +60,7 @@ public class RegisterController {
         if (userService.create(user)>0) {
             logger.debug("Регистрация завершена!");
 
-            logger.debug("Для удобства, сразу авторизуем пользователя");
+//            logger.debug("Для удобства, сразу авторизуем пользователя");
 //            req.getSession().setAttribute("userLogin", userName);
 //            req.getSession().setAttribute("userAdmin", user.isRole());
 

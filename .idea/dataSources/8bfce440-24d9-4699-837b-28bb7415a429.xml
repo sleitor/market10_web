@@ -212,81 +212,75 @@
       <RefSchemaName>demo</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>userName</RefColNames>
-    </foreign-key>
-    <foreign-key id="53" parent="9" name="user_roles_users_userName_fk">
-      <ColNames>login</ColNames>
-      <RefSchemaName>demo</RefSchemaName>
-      <RefTableName>users</RefTableName>
-      <RefColNames>userName</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="54" parent="10" name="uuid">
+    <column id="53" parent="10" name="uuid">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="55" parent="10" name="userName">
+    <column id="54" parent="10" name="userName">
       <Position>2</Position>
       <DataType>char(255)|0</DataType>
     </column>
-    <column id="56" parent="10" name="email">
+    <column id="55" parent="10" name="email">
       <Position>3</Position>
       <DataType>char(255)|0</DataType>
     </column>
-    <column id="57" parent="10" name="firstName">
+    <column id="56" parent="10" name="firstName">
       <Position>4</Position>
       <DataType>char(255)|0</DataType>
     </column>
-    <column id="58" parent="10" name="secondName">
+    <column id="57" parent="10" name="secondName">
       <Position>5</Position>
       <DataType>char(255)|0</DataType>
     </column>
-    <column id="59" parent="10" name="lastName">
+    <column id="58" parent="10" name="lastName">
       <Position>6</Position>
       <DataType>char(255)|0</DataType>
     </column>
-    <column id="60" parent="10" name="address">
+    <column id="59" parent="10" name="address">
       <Position>7</Position>
       <DataType>char(255)|0</DataType>
     </column>
-    <column id="61" parent="10" name="password">
+    <column id="60" parent="10" name="password">
       <Position>8</Position>
       <DataType>char(50)|0</DataType>
     </column>
-    <column id="62" parent="10" name="enabled">
+    <column id="61" parent="10" name="enabled">
       <Position>9</Position>
       <DataType>int(1)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <index id="63" parent="10" name="users_userName_uindex">
+    <index id="62" parent="10" name="users_userName_uindex">
       <ColNames>userName</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="64" parent="10" name="uuid">
+    <index id="63" parent="10" name="uuid">
       <ColNames>uuid</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="65" parent="10" name="UK_mmns67o5v4bfippoqitu4v3t6">
+    <index id="64" parent="10" name="UK_mmns67o5v4bfippoqitu4v3t6">
       <ColNames>userName</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="66" parent="10" name="PRIMARY">
+    <key id="65" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>uuid</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="67" parent="10" name="uuid">
+    <key id="66" parent="10" name="uuid">
       <ColNames>uuid</ColNames>
       <UnderlyingIndexName>uuid</UnderlyingIndexName>
     </key>
-    <key id="68" parent="10" name="UK_mmns67o5v4bfippoqitu4v3t6">
+    <key id="67" parent="10" name="UK_mmns67o5v4bfippoqitu4v3t6">
       <ColNames>userName</ColNames>
       <UnderlyingIndexName>UK_mmns67o5v4bfippoqitu4v3t6</UnderlyingIndexName>
     </key>
-    <key id="69" parent="10" name="users_userName_uindex">
+    <key id="68" parent="10" name="users_userName_uindex">
       <ColNames>userName</ColNames>
       <UnderlyingIndexName>users_userName_uindex</UnderlyingIndexName>
     </key>
