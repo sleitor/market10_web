@@ -3,11 +3,8 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-
-        <property name="dataSource" ref="dataSource"/>
 
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
@@ -15,16 +12,20 @@
 
         <property name="jpaProperties">
             <props>
-                <!--<beans:prop key="hibernate."-->
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">${database.structure}</prop>-->
+                <prop key="hibernate.connection.url">jdbc:mysql://server.w-bit.ru:3306/demo</prop>
+                <prop key="hibernate.connection.username">demo</prop>
+                <prop key="hibernate.connection.password">q1w2e3r45</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                <!--<prop key="hibernate.connection.shutdown">true</prop>-->
+                <prop key="hibernate.connection.writedelay">0</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
 
     </bean>
 
-    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
 
 </beans>

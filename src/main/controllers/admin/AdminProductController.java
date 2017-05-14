@@ -2,7 +2,6 @@ package main.controllers.admin;
 
 import main.models.pojo.Product;
 import main.models.services.ProductServiceInterface;
-import org.omg.PortableInterceptor.ServerRequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,6 +69,7 @@ public class AdminProductController {
         );
 
         if (product.getUuid() == 0) {
+            product.setUuid(null);
             productService.create(product);
         } else {
             productService.update(product);

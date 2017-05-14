@@ -5,111 +5,56 @@ import main.models.entity.EntProduct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
+@EnableTransactionManagement
 public class ProductDAO implements ProductInterface {
 
     private Logger logger = Logger.getLogger(ProductDAO.class);
 
-    private EntityManagerFactory emf =
-            Persistence.
-                    createEntityManagerFactory("mnf-pu");
 
     @PersistenceContext
     @Qualifier("entityManagerFactory")
     private EntityManager manager;
 
+//    private EntityManager em = JPAUtil.getInstance().createEntityManager();
 
     @Override
     public List<EntProduct> getAll() {
 
-        return emf.createEntityManager().
-                createQuery("from EntProduct").getResultList();
+        return manager.createQuery("from EntProduct ", EntProduct.class).getResultList();
 
-
-//        try (
-//                Connection connection = ConnectionPool.getInstance().getConnection();
-//                PreparedStatement preparedStatement =
-//                        connection.prepareStatement("SELECT * FROM products");
-//        ) {
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                Product product = new Product(
-//                        resultSet.getLong(1),
-//                        resultSet.getString(2),
-//                        resultSet.getString(3),
-//                        resultSet.getInt(4),
-//                        resultSet.getFloat(5));
-//
-//                products.add(product);
-//            }
-//        } catch (SQLException e) {
-//            logger.debug("Ошибка получения списка продуктов");
-//        }
-//        return products;
     }
 
     @Override
     public EntProduct getByID(Long id) {
-
-//        try (
-//                Connection connection = ConnectionPool.getInstance().getConnection();
-//                PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE uuid=?")
-//        ) {
-//            statement.setLong(1, id);
-//            ResultSet resultSet = statement.executeQuery();
-//            Product product = null;
-//
-//            if (resultSet.next()) {
-//                product = new Product(
-//                        resultSet.getLong(1),
-//                        resultSet.getString(2),
-//                        resultSet.getString(3),
-//                        resultSet.getInt(4),
-//                        resultSet.getFloat(5)
-//                );
-//            }
-//
-//            return product;
-//
-//        } catch (SQLException e) {
-//            logger.debug("Ошибка получения пролукта");
-//        }
-
-        throw new NotImplementedException();
+        return manager.find(EntProduct.class, id);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public int create(EntProduct product) {
 
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO products (name, description, quantity, cost) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-        ) {
-            statement.setString(1, product.getName());
-            statement.setString(2, product.getDescription());
-            statement.setInt(3, product.getQuantity());
-            statement.setFloat(4, product.getCost());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
+        logger.info("product " + product.getUuid());
+        logger.info("product " + product.getName());
+        logger.info("product " + product.getDescription());
+        logger.info("product " + product.getQuantity());
+        logger.info("product " + product.getCost());
+        manager.persist(product);
 
-        } catch (SQLException e) {
-            logger.debug("Ошибка создания продукта");
-        }
+        logger.info("product uuid" + product.getUuid());
+        return (int) (product.getUuid() != null ? Math.toIntExact(product.getUuid()) : 0);
 
-        return 0;
     }
 
     @Override
@@ -124,7 +69,7 @@ public class ProductDAO implements ProductInterface {
             statement.setString(1, product.getName());
             statement.setString(2, product.getDescription());
             statement.setInt(3, product.getQuantity());
-            statement.setFloat(4, product.getCost());
+            statement.setDouble(4, product.getCost());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.debug("Ошибка обновления товара");
@@ -132,20 +77,12 @@ public class ProductDAO implements ProductInterface {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteByID(Long id) {
 
-
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM products WHERE uuid=?");
-        ) {
-
-            statement.setLong(1,id);
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            logger.debug("Ошибка удаления товара");
-        }
+        EntProduct entProduct = manager.find(EntProduct.class, id);
+        logger.info("Contains: " + manager.contains(entProduct));
+        manager.remove(entProduct);
 
     }
 }

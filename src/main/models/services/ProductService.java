@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 public class ProductService implements ProductServiceInterface {
 
+    MapperFactory factory = new DefaultMapperFactory.Builder().build();
     private ProductInterface productDAO;
 
     @Autowired
@@ -37,17 +38,14 @@ public class ProductService implements ProductServiceInterface {
     public Collection<Product> getAll() {
 
         List<EntProduct> entProducts = (List<EntProduct>) productDAO.getAll();
-
         entProducts.sort(Comparator.comparingLong(EntProduct::getUuid));
 
         List<Product> products = new ArrayList<>();
 
-        MapperFactory factory = new DefaultMapperFactory.Builder().build();
-
+//        MapperFactory factory = new DefaultMapperFactory.Builder().build();
         BoundMapperFacade<EntProduct, Product> boundMapperFacade = factory.getMapperFacade(EntProduct.class, Product.class);
 
         entProducts.forEach(studentEntity -> products.add(boundMapperFacade.map(studentEntity)));
-
         return products;
 
 //        return productDAO.getAll();
@@ -56,14 +54,26 @@ public class ProductService implements ProductServiceInterface {
 
     @Override
     public Product getByID(Long id) {
+
+        EntProduct entProduct = productDAO.getByID(id);
+        BoundMapperFacade<EntProduct, Product> boundMapperFacade = factory.getMapperFacade(EntProduct.class, Product.class);
+
+        return boundMapperFacade.map(entProduct);
+
+
+
 //        return productDAO.getByID(id);
-        throw new NotImplementedException();
+
+
+        // throw new NotImplementedException();
     }
 
     @Override
     public int create(Product product) {
-//        return productDAO.create(product);
-        throw new NotImplementedException();
+
+        BoundMapperFacade<Product, EntProduct> boundMapperFacade = factory.getMapperFacade(Product.class, EntProduct.class);
+        EntProduct entProduct = boundMapperFacade.map(product);
+        return productDAO.create(entProduct);
     }
 
     @Override

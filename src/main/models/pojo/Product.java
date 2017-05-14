@@ -2,7 +2,7 @@ package main.models.pojo;
 
 public class Product {
 
-    private long uuid;
+    private Long uuid;
     private String name;
     private String description;
     private int quantity;
@@ -17,8 +17,12 @@ public class Product {
         this.cost = cost;
     }
 
-    public long getUuid() {
+    public Long getUuid() {
         return uuid;
+    }
+
+    public void setUuid(Long uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {

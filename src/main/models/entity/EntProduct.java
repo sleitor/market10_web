@@ -1,29 +1,31 @@
 package main.models.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
+
 
 /**
  * Created by User on 10.05.2017.
  */
 @Entity
 @Table(name = "products", schema = "demo")
-public class EntProduct {
-    private long uuid;
+public class EntProduct implements Serializable {
+    private Long uuid;
     private String name;
     private String description;
     private Integer quantity;
-    private Integer cost;
+    private Float cost;
     private Collection<EntOrderProducts> orderProductsByUuid;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "uuid", nullable = false)
-    public long getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
-    public void setUuid(long uuid) {
+    public void setUuid(Long uuid) {
         this.uuid = uuid;
     }
 
@@ -59,11 +61,11 @@ public class EntProduct {
 
     @Basic
     @Column(name = "cost", nullable = true)
-    public Integer getCost() {
+    public Float getCost() {
         return cost;
     }
 
-    public void setCost(Integer cost) {
+    public void setCost(Float cost) {
         this.cost = cost;
     }
 
@@ -74,7 +76,7 @@ public class EntProduct {
 
         EntProduct that = (EntProduct) o;
 
-        if (uuid != that.uuid) return false;
+        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
@@ -93,12 +95,13 @@ public class EntProduct {
         return result;
     }
 
-    @OneToMany(mappedBy = "productsByUuidProduct")
-    public Collection<EntOrderProducts> getOrderProductsByUuid() {
-        return orderProductsByUuid;
-    }
-
-    public void setOrderProductsByUuid(Collection<EntOrderProducts> orderProductsByUuid) {
-        this.orderProductsByUuid = orderProductsByUuid;
-    }
+//    @OneToMany(mappedBy = "productsByUuidProduct",fetch = FetchType.LAZY)
+//    @Transient
+//    public Collection<EntOrderProducts> getOrderProductsByUuid() {
+//        return orderProductsByUuid;
+//    }
+//
+//    public void setOrderProductsByUuid(Collection<EntOrderProducts> orderProductsByUuid) {
+//        this.orderProductsByUuid = orderProductsByUuid;
+//    }
 }

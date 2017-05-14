@@ -1,7 +1,6 @@
 package main.models.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * Created by User on 10.05.2017.
@@ -12,7 +11,7 @@ public class EntUserRoles {
     private long uuid;
     private String login;
     private String roles;
-    private Collection<EntUsers> userRolesByUserName;
+    private EntUsers userRolesByUserName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,13 +66,13 @@ public class EntUserRoles {
         return result;
     }
 
-    @ManyToMany /*(mappedBy = "userRolesByUserName")*/
-    @JoinColumn(name = "login", referencedColumnName = "userName")
-    public Collection<EntUsers> getUserRolesByUserName() {
+    @ManyToOne(fetch = FetchType.LAZY) /*(mappedBy = "userRolesByUserName")*/
+    @JoinColumn(name = "login", referencedColumnName = "userName", insertable = false, updatable = false)
+    public EntUsers getUserRolesByUserName() {
         return userRolesByUserName;
     }
 
-    public void setUserRolesByUserName(Collection<EntUsers> userRolesByUserName) {
+    public void setUserRolesByUserName(EntUsers userRolesByUserName) {
         this.userRolesByUserName = userRolesByUserName;
     }
 }

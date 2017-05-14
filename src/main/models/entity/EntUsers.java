@@ -7,7 +7,7 @@ import java.util.Collection;
  * Created by User on 10.05.2017.
  */
 @Entity
-@Table(name = "users", schema = "demo", catalog = "")
+@Table(name = "users", schema = "demo")
 public class EntUsers {
     private long uuid;
     private String userName;
@@ -23,7 +23,7 @@ public class EntUsers {
     private Collection<EntUserRoles> userRolesByUserName;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uuid", nullable = false)
     public long getUuid() {
         return uuid;
@@ -163,18 +163,26 @@ public class EntUsers {
     public Collection<EntOrders> getOrdersByUuid() {
         return ordersByUuid;
     }
-
     public void setOrdersByUuid(Collection<EntOrders> ordersByUuid) {
         this.ordersByUuid = ordersByUuid;
     }
 
-    @ManyToMany
-    @JoinColumn(name = "userName", referencedColumnName = "login")
+    @OneToMany(mappedBy = "userRolesByUserName")
     public Collection<EntUserRoles> getUserRolesByUserName() {
         return userRolesByUserName;
     }
-
     public void setUserRolesByUserName(Collection<EntUserRoles> userRolesByUserName) {
         this.userRolesByUserName = userRolesByUserName;
     }
+    //
+//    @ManyToMany
+//    @JoinColumn(name = "userName", referencedColumnName = "login")
+//    public Collection<EntUserRoles> getUserRolesByUserName() {
+//        return userRolesByUserName;
+//    }
+//
+//    public void setUserRolesByUserName(Collection<EntUserRoles> userRolesByUserName) {
+//        this.userRolesByUserName = userRolesByUserName;
+//    }
+
 }

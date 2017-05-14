@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="mnf-pu"
-                      transaction-type="RESOURCE_LOCAL"> <!-- enable if you prefer xml over annotations <mapping-file>META-INF/orm.xml</mapping-file> -->
+                      transaction-type="RESOURCE_LOCAL">
+        <!-- enable if you prefer xml over annotations <mapping-file>META-INF/orm.xml</mapping-file> -->
         <properties> <!-- Configuring JDBC properties -->
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:mysql://sleitor.stc5.ru/demo"/>
             <property name="javax.persistence.jdbc.user" value="demo"/>
             <property name="javax.persistence.jdbc.password" value="q1w2e3r45"/>
             <property name="javax.persistence.jdbc.driver"
-                      value="com.mysql.jdbc.Driver"/> <!-- Hibernate properties -->
-            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>-->
-            <!--<property name="hibernate.hbm2ddl.auto" value="cre "/>-->
+                      value="com.mysql.jdbc.Driver"/>
+            <!-- Hibernate properties -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <property name="hibernate.id.new_generator_mappings" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.autocommit" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.show_sql" value="true"/> <!-- Configuring Connection Pool -->
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <!-- Configuring Connection Pool -->
             <property name="hibernate.c3p0.min_size" value="5"/>
             <property name="hibernate.c3p0.max_size" value="20"/>
             <property name="hibernate.c3p0.timeout" value="500"/>
