@@ -1,6 +1,5 @@
 package main.models.DAO;
 
-import main.models.ConnectionPool;
 import main.models.entity.EntProduct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -58,22 +54,25 @@ public class ProductDAO implements ProductInterface {
     }
 
     @Override
+    @Transactional
     public void update(EntProduct product) {
 
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("UPDATE products SET name=?, description=?, quantity=?, cost=? WHERE uuid=?");
-        ) {
+        manager.merge(product);
 
-            statement.setLong(5, product.getUuid());
-            statement.setString(1, product.getName());
-            statement.setString(2, product.getDescription());
-            statement.setInt(3, product.getQuantity());
-            statement.setDouble(4, product.getCost());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.debug("Ошибка обновления товара");
-        }
+//        try (
+//                Connection connection = ConnectionPool.getInstance().getConnection();
+//                PreparedStatement statement = connection.prepareStatement("UPDATE products SET name=?, description=?, quantity=?, cost=? WHERE uuid=?");
+//        ) {
+//
+//            statement.setLong(5, product.getUuid());
+//            statement.setString(1, product.getName());
+//            statement.setString(2, product.getDescription());
+//            statement.setInt(3, product.getQuantity());
+//            statement.setDouble(4, product.getCost());
+//            statement.executeUpdate();
+//        } catch (SQLException e) {
+//            logger.debug("Ошибка обновления товара");
+//        }
     }
 
     @Override

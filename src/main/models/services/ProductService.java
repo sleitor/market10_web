@@ -8,7 +8,6 @@ import main.models.entity.EntProduct;
 import main.models.pojo.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,7 +21,8 @@ import java.util.List;
 @Service
 public class ProductService implements ProductServiceInterface {
 
-    MapperFactory factory = new DefaultMapperFactory.Builder().build();
+    private static MapperFactory factory = new DefaultMapperFactory.Builder().build();
+
     private ProductInterface productDAO;
 
     @Autowired
@@ -59,13 +59,6 @@ public class ProductService implements ProductServiceInterface {
         BoundMapperFacade<EntProduct, Product> boundMapperFacade = factory.getMapperFacade(EntProduct.class, Product.class);
 
         return boundMapperFacade.map(entProduct);
-
-
-
-//        return productDAO.getByID(id);
-
-
-        // throw new NotImplementedException();
     }
 
     @Override
@@ -78,8 +71,9 @@ public class ProductService implements ProductServiceInterface {
 
     @Override
     public void update(Product product) {
-//        productDAO.update(product);
-        throw new NotImplementedException();
+        BoundMapperFacade<Product, EntProduct> boundMapperFacade = factory.getMapperFacade(Product.class, EntProduct.class);
+        productDAO.update(boundMapperFacade.map(product));
+
     }
 
     @Override
