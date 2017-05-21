@@ -3,7 +3,7 @@ package main.models.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,7 +16,7 @@ public class EntOrder implements Serializable {
     private Date date;
     private Float cost;
     private String status;
-    private Collection<EntOrderProduct> orderProductsByUuid;
+    private List<EntOrderProduct> orderProducts;
     private EntUser usersByUuidUser;
 
     public EntOrder() {
@@ -88,13 +88,12 @@ public class EntOrder implements Serializable {
     }
 
     @OneToMany(mappedBy = "ordersByUuidOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @Transient
-    public Collection<EntOrderProduct> getOrderProductsByUuid() {
-        return orderProductsByUuid;
+    public List<EntOrderProduct> getOrderProductsByUuid() {
+        return orderProducts;
     }
 
-    public void setOrderProductsByUuid(Collection<EntOrderProduct> orderProductsByUuid) {
-        this.orderProductsByUuid = orderProductsByUuid;
+    public void setOrderProductsByUuid(List<EntOrderProduct> orderProductsByUuid) {
+        this.orderProducts = orderProductsByUuid;
     }
 
     @ManyToOne

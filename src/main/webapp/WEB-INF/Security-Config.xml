@@ -14,6 +14,7 @@
         <s:intercept-url pattern="/admin/*" access="hasRole('ADMIN')"/>
         <s:intercept-url pattern="/cart/order" access="hasRole('USER')"/>
         <s:intercept-url pattern="/history" access="hasRole('USER')"/>
+        <s:intercept-url pattern="/orderView" access="hasRole('USER')"/>
         <s:intercept-url pattern="/registration" access="isAnonymous()"/>
         <!--<s:intercept-url pattern="/registration" access="isAnonymous()" method="POST"/>-->
         <s:intercept-url pattern="/login" access="isAnonymous()"/>

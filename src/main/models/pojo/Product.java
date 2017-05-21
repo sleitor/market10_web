@@ -10,6 +10,9 @@ public class Product {
     private int quantity;
     private float cost;
 
+    public Product() {
+    }
+
     public Product(long uuid, String name, String description, int quantity, float cost) {
 
         this.uuid = uuid;

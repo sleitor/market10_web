@@ -1,7 +1,7 @@
 package main.models.pojo;
 
 import java.sql.Date;
-import java.util.Collection;
+import java.util.List;
 
 public class Order {
 
@@ -9,7 +9,7 @@ public class Order {
     private long uuid_user;
     private String login_user;
     private Date date;
-    private Collection<OrderProduct> orderProducts;
+    private List<OrderProduct> orderProducts;
     private float cost;
     private String status;
 
@@ -79,11 +79,11 @@ public class Order {
         return Long.hashCode(uuid) * 32;
     }
 
-    public Collection<OrderProduct> getOrderProducts() {
+    public List<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setOrderProducts(Collection<OrderProduct> orderProducts) {
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
     }
 }

@@ -14,9 +14,10 @@ public class EntOrderProduct implements Serializable {
     private long uuidOrder;
     private long uuidProduct;
     private Integer count;
-    private Double cost;
+    private Float cost;
     private EntOrder ordersByUuidOrder;
     private EntProduct productsByUuidProduct;
+    private String name_product;
 
     public EntOrderProduct() {
     }
@@ -33,13 +34,25 @@ public class EntOrderProduct implements Serializable {
 
     @Basic
     @Column(name = "cost")
-    public Double getCost() {
+    public Float getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(Float cost) {
         this.cost = cost;
     }
+
+
+    @Basic
+    @Column(name = "name_product")
+    public String getName_product() {
+        return name_product;
+    }
+
+    public void setName_product(String name_product) {
+        this.name_product = name_product;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -78,7 +91,7 @@ public class EntOrderProduct implements Serializable {
         return result;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uuid_order", referencedColumnName = "uuid", nullable = false)
     public EntOrder getOrdersByUuidOrder() {
         return ordersByUuidOrder;

@@ -67,7 +67,7 @@
                 <input type="hidden" class="form-control" name="date" value="${order.date}">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" class="form-control" name="cost" value="${order.cost}">
-                <button type="submit" class="btn btn-success">Сохранить</button>
+                <button onclick="window.history.back();return false;" class="btn btn-success">Назад</button>
             </div>
         </div>
     </form>
