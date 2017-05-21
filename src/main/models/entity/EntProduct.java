@@ -16,6 +16,7 @@ public class EntProduct implements Serializable {
     private String description;
     private Integer quantity;
     private Float cost;
+    private boolean deleted;
     private Collection<EntOrderProduct> orderProductsByUuid;
 
     @Id
@@ -67,6 +68,16 @@ public class EntProduct implements Serializable {
 
     public void setCost(Float cost) {
         this.cost = cost;
+    }
+
+    @Basic
+    @Column(name = "deleted")
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

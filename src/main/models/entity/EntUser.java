@@ -20,6 +20,7 @@ public class EntUser implements Serializable {
     private String password;
     private int role;
     private int enabled;
+    private boolean deleted;
     private Collection<EntOrder> ordersByUuid;
     private Collection<EntUserRoles> userRolesByUserName;
 
@@ -107,15 +108,15 @@ public class EntUser implements Serializable {
         this.password = password;
     }
 
-//    @Basic
-//    @Column(name = "role", nullable = false)
-//    public int getRole() {
-//        return role;
-//    }
-//
-//    public void setRole(int role) {
-//        this.role = role;
-//    }
+    @Basic
+    @Column(name = "deleted")
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     @Basic
     @Column(name = "enabled", nullable = false)

@@ -25,7 +25,7 @@ public class OrderDAO implements OrderInterface {
     @Override
     public List<EntOrder> getAll() {
 
-        return JPAUtil.getInstance().createEntityManager().createQuery("select e from EntOrder e", EntOrder.class).getResultList();
+        return JPAUtil.getInstance().createEntityManager().createQuery("select e from EntOrder e where e.deleted=false ", EntOrder.class).getResultList();
     }
 
     @Override
@@ -51,6 +51,10 @@ public class OrderDAO implements OrderInterface {
     @Override
     @Transactional
     public void deleteByID(Long id) {
-        manager.remove(getByID(id));
+        EntOrder entOrder = getByID(id);
+        entOrder.setDeleted(true);
+        update(entOrder);
+//        manager.remove(entOrder);
+
     }
 }

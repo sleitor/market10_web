@@ -28,7 +28,7 @@ public class ProductDAO implements ProductInterface {
     @Override
     public List<EntProduct> getAll() {
 
-        return manager.createQuery("select e from EntProduct e", EntProduct.class).getResultList();
+        return manager.createQuery("select e from EntProduct e where e.deleted=false ", EntProduct.class).getResultList();
 
     }
 
@@ -64,9 +64,12 @@ public class ProductDAO implements ProductInterface {
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteByID(Long id) {
 
-        EntProduct entProduct = manager.find(EntProduct.class, id);
-        logger.info("Contains: " + manager.contains(entProduct));
-        manager.remove(entProduct);
+        EntProduct entProduct = getByID(id);
+        entProduct.setDeleted(true);
+        update(entProduct);
+//        EntProduct entProduct = manager.find(EntProduct.class, id);
+//        logger.info("Contains: " + manager.contains(entProduct));
+//        manager.remove(entProduct);
 
     }
 }

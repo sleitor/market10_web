@@ -18,6 +18,7 @@ public class EntOrder implements Serializable {
     private String status;
     private List<EntOrderProduct> orderProducts;
     private EntUser usersByUuidUser;
+    private boolean deleted;
 
     public EntOrder() {
     }
@@ -61,6 +62,16 @@ public class EntOrder implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Basic
+    @Column(name = "deleted")
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

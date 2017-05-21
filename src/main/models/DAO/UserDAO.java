@@ -25,7 +25,7 @@ public class UserDAO implements UserInterface {
     @Override
     public List<EntUser> getAll() {
 
-        return manager.createQuery("select e from EntUser e", EntUser.class).getResultList();
+        return manager.createQuery("select e from EntUser e where e.deleted=false ", EntUser.class).getResultList();
     }
 
     @Override
@@ -34,32 +34,6 @@ public class UserDAO implements UserInterface {
         return manager.find(EntUser.class, id);
     }
 
-    //    @Deprecated
-//    public int createHiber(User user) {
-//        int id = 0;
-//        Session session = HibernateUtil.getSessionFactory().openSession();
-//
-//        session.beginTransaction();
-//        EntUser entUser = new EntUser();
-//
-//        entUser.setUserName(user.getUserName());
-//        entUser.setEmail(user.getEmail());
-//        entUser.setFirstName(user.getFirstName());
-//        entUser.setSecondName(user.getSecondName());
-//        entUser.setLastName(user.getLastName());
-//        entUser.setAddress(user.getAddress());
-//        entUser.setPassword(user.getPassword());
-//        entUser.setEnabled(1);
-//
-//        session.save(entUser);
-//        session.getTransaction().commit();
-//
-//        session.close();
-//
-//
-//        return id;
-//
-//    }
     @Override
     @Transactional
     public int create(EntUser entUser) {
@@ -87,7 +61,8 @@ public class UserDAO implements UserInterface {
     public void deleteByID(Long id) {
 
         EntUser entUser = getByID(id);
-        manager.remove(entUser);
+        entUser.setDeleted(true);
+        update(entUser);
     }
 
     @Override
