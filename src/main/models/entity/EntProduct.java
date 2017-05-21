@@ -16,7 +16,7 @@ public class EntProduct implements Serializable {
     private String description;
     private Integer quantity;
     private Float cost;
-    private Collection<EntOrderProducts> orderProductsByUuid;
+    private Collection<EntOrderProduct> orderProductsByUuid;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -97,11 +97,11 @@ public class EntProduct implements Serializable {
 
     @OneToMany(mappedBy = "productsByUuidProduct", fetch = FetchType.LAZY)
     @Transient
-    public Collection<EntOrderProducts> getOrderProductsByUuid() {
+    public Collection<EntOrderProduct> getOrderProductsByUuid() {
         return orderProductsByUuid;
     }
 
-    public void setOrderProductsByUuid(Collection<EntOrderProducts> orderProductsByUuid) {
+    public void setOrderProductsByUuid(Collection<EntOrderProduct> orderProductsByUuid) {
         this.orderProductsByUuid = orderProductsByUuid;
     }
 }

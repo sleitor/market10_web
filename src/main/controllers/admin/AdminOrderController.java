@@ -2,6 +2,7 @@ package main.controllers.admin;
 
 import main.models.pojo.Order;
 import main.models.services.OrderServiceInterface;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ import java.sql.Date;
 public class AdminOrderController {
 
     private final OrderServiceInterface orderService;
+
+    private Logger logger = Logger.getLogger(OrderServiceInterface.class);
 
     //TODO exception handle with ControllerAdvice
 
@@ -43,6 +46,10 @@ public class AdminOrderController {
 
         if ("edit".equals(action)){
             Order order = orderService.getByID(id);
+
+//TODO NOP
+//            logger.info("Size: " + order.getOrderProducts().size());
+
             model.addAttribute("order", order);
             return "admin/orderEdit";
         }

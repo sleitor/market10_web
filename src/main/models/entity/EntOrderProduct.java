@@ -1,44 +1,28 @@
 package main.models.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
- * Created by User on 10.05.2017.
+ * Entity of OrderProduct for JPA
  */
 @Entity
-@Table(name = "orderProducts", schema = "demo", catalog = "")
-public class EntOrderProducts {
+@Table(name = "orderProducts", schema = "demo")
+public class EntOrderProduct implements Serializable {
+    private Long uuid;
     private long uuidOrder;
     private long uuidProduct;
     private Integer count;
     private Double cost;
-    private long uuid;
-    private EntOrders ordersByUuidOrder;
+    private EntOrder ordersByUuidOrder;
     private EntProduct productsByUuidProduct;
 
-
-//    @Basic
-//    @Column(name = "uuid_order", nullable = false)
-//    public long getUuidOrder() {
-//        return uuidOrder;
-//    }
-//
-//    public void setUuidOrder(long uuidOrder) {
-//        this.uuidOrder = uuidOrder;
-//    }
-
-//    @Basic
-//    @Column(name = "uuid_product", nullable = false)
-//    public long getUuidProduct() {
-//        return uuidProduct;
-//    }
-//
-//    public void setUuidProduct(long uuidProduct) {
-//        this.uuidProduct = uuidProduct;
-//    }
+    public EntOrderProduct() {
+    }
 
     @Basic
-    @Column(name = "count", nullable = true)
+    @Column(name = "count")
     public Integer getCount() {
         return count;
     }
@@ -48,7 +32,7 @@ public class EntOrderProducts {
     }
 
     @Basic
-    @Column(name = "cost", nullable = true, precision = 0)
+    @Column(name = "cost")
     public Double getCost() {
         return cost;
     }
@@ -60,11 +44,11 @@ public class EntOrderProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "uuid", nullable = false)
-    public long getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
-    public void setUuid(long uuid) {
+    public void setUuid(Long uuid) {
         this.uuid = uuid;
     }
 
@@ -73,11 +57,11 @@ public class EntOrderProducts {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EntOrderProducts that = (EntOrderProducts) o;
+        EntOrderProduct that = (EntOrderProduct) o;
 
         if (uuidOrder != that.uuidOrder) return false;
         if (uuidProduct != that.uuidProduct) return false;
-        if (uuid != that.uuid) return false;
+        if (!Objects.equals(uuid, that.uuid)) return false;
         if (count != null ? !count.equals(that.count) : that.count != null) return false;
         if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
 
@@ -96,11 +80,11 @@ public class EntOrderProducts {
 
     @ManyToOne
     @JoinColumn(name = "uuid_order", referencedColumnName = "uuid", nullable = false)
-    public EntOrders getOrdersByUuidOrder() {
+    public EntOrder getOrdersByUuidOrder() {
         return ordersByUuidOrder;
     }
 
-    public void setOrdersByUuidOrder(EntOrders ordersByUuidOrder) {
+    public void setOrdersByUuidOrder(EntOrder ordersByUuidOrder) {
         this.ordersByUuidOrder = ordersByUuidOrder;
     }
 

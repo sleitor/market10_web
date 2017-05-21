@@ -13,7 +13,7 @@
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</prop>
-                <!--<prop key="hibernate.hbm2ddl.auto">${database.structure}</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.connection.url">jdbc:mysql://server.w-bit.ru:3306/demo</prop>
                 <prop key="hibernate.connection.username">demo</prop>
                 <prop key="hibernate.connection.password">q1w2e3r45</prop>

@@ -50,6 +50,11 @@
                                 test="${pageContext.request.requestURI =='/market/registration.jsp'}"> class="active" </c:if> >
                             <a href="<c:url value="/registration"/>">Регистрация</a></li>
                     </security:authorize>
+                    <security:authorize access="hasRole('USER')">
+                        <li <c:if
+                                test="${pageContext.request.requestURI =='/market/history.jsp'}"> class="active" </c:if> >
+                            <a href="<c:url value="/history"/>">История заказов</a></li>
+                    </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"

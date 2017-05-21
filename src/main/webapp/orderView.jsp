@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% request.setAttribute("title", "Редактирование заказа");%>
-<c:import url='../template/header.jsp' charEncoding='utf-8'/>
+<c:import url='template/header.jsp' charEncoding='utf-8'/>
 
 <h1>Редактирование заказа.</h1>
 
@@ -28,26 +28,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="status" class="col-sm-2 control-label">Статус</label>
+            <label class="col-sm-2 control-label">Статус</label>
             <div class="col-sm-10">
-                <select name="status" id="status" class="form-control" required>
-                    <option>...</option>
-                    <option value="Новый"
-                            <c:if test="${order.status == 'Новый'}">selected</c:if> >Новый
-                    </option>
-                    <option value="Обработка"
-                            <c:if test="${order.status == 'Обработка'}">selected</c:if> >Обработка
-                    </option>
-                    <option value="Доставка"
-                            <c:if test="${order.status == 'Доставка'}">selected</c:if> >Доставка
-                    </option>
-                    <option value="Выполнен"
-                            <c:if test="${order.status == 'Выполнен'}">selected</c:if> >Выполнен
-                    </option>
-                    <option value="Отменен"
-                            <c:if test="${order.status == 'Отменен'}">selected</c:if> >Отменен
-                    </option>
-                </select>
+                <p class="form-control-static">${order.status}</p>
             </div>
         </div>
         <div class="form-group">
@@ -91,4 +74,4 @@
 </div>
 
 
-<%@ include file="../template/footer.html" %>
+<%@ include file="template/footer.html" %>

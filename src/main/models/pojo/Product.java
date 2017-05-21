@@ -1,5 +1,7 @@
 package main.models.pojo;
 
+import java.util.Objects;
+
 public class Product {
 
     private Long uuid;
@@ -43,7 +45,7 @@ public class Product {
 
     @Override
     public boolean equals(Object obj) {
-        return obj != null && obj instanceof Product && uuid == ((Product) obj).uuid;
+        return obj != null && obj instanceof Product && Objects.equals(uuid, ((Product) obj).uuid);
     }
 
     @Override

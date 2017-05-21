@@ -28,7 +28,7 @@ public class ProductDAO implements ProductInterface {
     @Override
     public List<EntProduct> getAll() {
 
-        return manager.createQuery("from EntProduct ", EntProduct.class).getResultList();
+        return manager.createQuery("select e from EntProduct e", EntProduct.class).getResultList();
 
     }
 
@@ -49,7 +49,7 @@ public class ProductDAO implements ProductInterface {
         manager.persist(product);
 
         logger.info("product uuid" + product.getUuid());
-        return (int) (product.getUuid() != null ? Math.toIntExact(product.getUuid()) : 0);
+        return (product.getUuid() != null ? Math.toIntExact(product.getUuid()) : 0);
 
     }
 

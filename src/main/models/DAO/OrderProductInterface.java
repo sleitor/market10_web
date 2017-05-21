@@ -1,15 +1,17 @@
 package main.models.DAO;
 
-import main.models.pojo.OrderProduct;
+import main.models.entity.EntOrderProduct;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DAO интерфейс продуктов в заказе
  */
-public interface OrderProductInterface extends DAOInterface<Long, OrderProduct> {
+public interface OrderProductInterface extends DAOInterface<Long, EntOrderProduct> {
 
-    ArrayList<OrderProduct> getAllByOrder(Long id);
+    List<EntOrderProduct> getAllByOrder(Long id);
+
+    List<EntOrderProduct> getAllByProduct(Long id);
 
     void deleteByOrderID(Long id);
 

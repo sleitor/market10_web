@@ -1,12 +1,10 @@
 package main.models.DAO;
 
-import main.models.pojo.Order;
-
-import java.util.UUID;
+import main.models.entity.EntOrder;
 
 /**
  * DAO интерфейс заказов
  */
-public interface OrderInterface extends DAOInterface<Long, Order> {
+public interface OrderInterface extends DAOInterface<Long, EntOrder> {
 
 }

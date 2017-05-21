@@ -24,8 +24,8 @@
         <property name="c3p0.idle_test_period">2000</property>
 
 
-        <mapping class="main.models.entity.EntOrderProducts"/>
-        <mapping class="main.models.entity.EntOrders"/>
+        <mapping class="main.models.entity.EntOrderProduct"/>
+        <mapping class="main.models.entity.EntOrder"/>
         <mapping class="main.models.entity.EntProduct"/>
         <mapping class="main.models.entity.EntUserRoles"/>
         <mapping class="main.models.entity.EntUser"/>

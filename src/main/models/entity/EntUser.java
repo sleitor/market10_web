@@ -20,7 +20,7 @@ public class EntUser implements Serializable {
     private String password;
     private int role;
     private int enabled;
-    private Collection<EntOrders> ordersByUuid;
+    private Collection<EntOrder> ordersByUuid;
     private Collection<EntUserRoles> userRolesByUserName;
 
     public EntUser() {
@@ -164,14 +164,15 @@ public class EntUser implements Serializable {
     }
 
     @OneToMany(mappedBy = "usersByUuidUser")
-    public Collection<EntOrders> getOrdersByUuid() {
+    public Collection<EntOrder> getOrdersByUuid() {
         return ordersByUuid;
     }
-    public void setOrdersByUuid(Collection<EntOrders> ordersByUuid) {
+
+    public void setOrdersByUuid(Collection<EntOrder> ordersByUuid) {
         this.ordersByUuid = ordersByUuid;
     }
 
-    @OneToMany(mappedBy = "userRolesByUserName", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userRolesByUserName", cascade = CascadeType.ALL)
     public Collection<EntUserRoles> getUserRolesByUserName() {
         return userRolesByUserName;
     }

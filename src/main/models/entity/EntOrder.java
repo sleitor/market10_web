@@ -1,30 +1,35 @@
 package main.models.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
- * Created by User on 10.05.2017.
+ * Entity of Order for JPA
  */
 @Entity
 @Table(name = "orders", schema = "demo")
-public class EntOrders {
-    private long uuid;
+public class EntOrder implements Serializable {
+    private Long uuid;
     private Date date;
-    private Double cost;
+    private Float cost;
     private String status;
-    private Collection<EntOrderProducts> orderProductsByUuid;
+    private Collection<EntOrderProduct> orderProductsByUuid;
     private EntUser usersByUuidUser;
+
+    public EntOrder() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "uuid", nullable = false)
-    public long getUuid() {
+    public Long getUuid() {
         return uuid;
     }
 
-    public void setUuid(long uuid) {
+    public void setUuid(Long uuid) {
         this.uuid = uuid;
     }
 
@@ -40,11 +45,11 @@ public class EntOrders {
 
     @Basic
     @Column(name = "cost", nullable = true, precision = 0)
-    public Double getCost() {
+    public Float getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(Float cost) {
         this.cost = cost;
     }
 
@@ -63,12 +68,12 @@ public class EntOrders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EntOrders entOrders = (EntOrders) o;
+        EntOrder entOrder = (EntOrder) o;
 
-        if (uuid != entOrders.uuid) return false;
-        if (date != null ? !date.equals(entOrders.date) : entOrders.date != null) return false;
-        if (cost != null ? !cost.equals(entOrders.cost) : entOrders.cost != null) return false;
-        if (status != null ? !status.equals(entOrders.status) : entOrders.status != null) return false;
+        if (!Objects.equals(uuid, entOrder.uuid)) return false;
+        if (date != null ? !date.equals(entOrder.date) : entOrder.date != null) return false;
+        if (cost != null ? !cost.equals(entOrder.cost) : entOrder.cost != null) return false;
+        if (status != null ? !status.equals(entOrder.status) : entOrder.status != null) return false;
 
         return true;
     }
@@ -82,12 +87,13 @@ public class EntOrders {
         return result;
     }
 
-    @OneToMany(mappedBy = "ordersByUuidOrder")
-    public Collection<EntOrderProducts> getOrderProductsByUuid() {
+    @OneToMany(mappedBy = "ordersByUuidOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @Transient
+    public Collection<EntOrderProduct> getOrderProductsByUuid() {
         return orderProductsByUuid;
     }
 
-    public void setOrderProductsByUuid(Collection<EntOrderProducts> orderProductsByUuid) {
+    public void setOrderProductsByUuid(Collection<EntOrderProduct> orderProductsByUuid) {
         this.orderProductsByUuid = orderProductsByUuid;
     }
 

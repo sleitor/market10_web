@@ -1,124 +1,56 @@
 package main.models.DAO;
 
-import main.models.ConnectionPool;
-import main.models.pojo.Order;
+import main.controllers.JPAUtil;
+import main.models.entity.EntOrder;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.*;
-import java.util.HashSet;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Component
+@EnableTransactionManagement
 public class OrderDAO implements OrderInterface {
 
     private Logger logger = Logger.getLogger(OrderDAO.class);
 
+    @PersistenceContext
+    @Qualifier("entityManagerFactory")
+    private EntityManager manager;
+
     @Override
-    public HashSet<Order> getAll() {
+    public List<EntOrder> getAll() {
 
-        HashSet<Order> orders = new HashSet<>();
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders");
-        ) {
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Order order = new Order(
-                        resultSet.getLong(1),
-                        resultSet.getLong(2),
-                        resultSet.getDate(3),
-                        resultSet.getFloat(4),
-                        resultSet.getString(5)
-                );
-                orders.add(order);
-            }
-
-        } catch (SQLException e) {
-            logger.debug("Ошибка получения заказов");
-        }
-
-        return orders;
+        return JPAUtil.getInstance().createEntityManager().createQuery("select e from EntOrder e", EntOrder.class).getResultList();
     }
 
     @Override
-    public Order getByID(Long id) {
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE uuid=?");
-        ) {
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new Order(
-                    resultSet.getLong(1),
-                    resultSet.getLong(2),
-                    resultSet.getDate(3),
-                    resultSet.getFloat(4),
-                    resultSet.getString(5)
-            );
+    public EntOrder getByID(Long id) {
+        return manager.find(EntOrder.class, id);
 
-        } catch (SQLException e) {
-            logger.debug("Ошибка получения заказа по ID");
-        }
-        throw new NotImplementedException();
     }
 
     @Override
-    public int create(Order order) {
+    @Transactional
+    public int create(EntOrder entOrder) {
 
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO  orders ( `uuid_user` ,  `date` ,  `cost` ) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
-        ) {
-
-            statement.setLong(1, order.getUuid_user());
-            statement.setDate(2, order.getDate());
-            statement.setFloat(3, order.getCost());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
-
-        } catch (SQLException e) {
-            logger.debug("Ошибка создания нового заказа");
-        }
-
-        return 0;
+        manager.persist(entOrder);
+        return (entOrder.getUuid() != null ? Math.toIntExact(entOrder.getUuid()) : 0);
     }
 
     @Override
-    public void update(Order order) {
-
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("UPDATE orders SET cost=?, status=? WHERE uuid=?")
-        ) {
-
-            statement.setFloat(1, order.getCost());
-            statement.setString(2, order.getStatus());
-            statement.setLong(3, order.getUuid());
-            statement.executeUpdate();
-
-        } catch (Exception e) {
-            logger.debug("Ошибка обновления заказа");
-        }
+    @Transactional
+    public void update(EntOrder entOrder) {
+        manager.merge(entOrder);
     }
 
     @Override
+    @Transactional
     public void deleteByID(Long id) {
-        try (
-                Connection connection = ConnectionPool.getInstance().getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE  FROM orders WHERE uuid=?")
-        ) {
-            statement.setLong(1, id);
-            statement.execute();
-
-        } catch (Exception e) {
-            logger.debug("Ошибка удаления заказа");
-        }
+        manager.remove(getByID(id));
     }
 }

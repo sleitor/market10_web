@@ -1,13 +1,15 @@
 package main.models.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
- * Created by User on 10.05.2017.
+ * Entity of User roles for JPA
  */
 @Entity
 @Table(name = "user_roles", schema = "demo")
-public class EntUserRoles {
+public class EntUserRoles implements Serializable {
     private Long uuid;
     private String login;
     private String roles;
@@ -59,7 +61,7 @@ public class EntUserRoles {
 
         EntUserRoles that = (EntUserRoles) o;
 
-        if (uuid != that.uuid) return false;
+        if (!Objects.equals(uuid, that.uuid)) return false;
         if (login != null ? !login.equals(that.login) : that.login != null) return false;
         if (roles != null ? !roles.equals(that.roles) : that.roles != null) return false;
 
