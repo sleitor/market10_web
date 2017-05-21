@@ -142,7 +142,11 @@ public class CartController {
                     cart.get(item.getUuid()),
                     item.getCost()
             );
+
             orderProductService.create(orderProduct);
+            Product product = productService.getByID(item.getUuid());
+            product.setQuantity(product.getQuantity() - cart.get(item.getUuid()));
+            productService.update(product);
         }
         order.setCost(cost);
         order.setUuid(orderNum);

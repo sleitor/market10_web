@@ -42,6 +42,10 @@ public class Product {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public float getCost() {
         return cost;
     }

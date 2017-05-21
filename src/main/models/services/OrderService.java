@@ -55,19 +55,6 @@ public class OrderService implements OrderServiceInterface {
         mapperFactory.classMap(EntOrder.class, Order.class)
                 .field("usersByUuidUser.uuid", "uuid_user")
                 .field("usersByUuidUser.userName", "login_user")
-
-                // .field("orderProducts[0]", "orderProducts[0]")
-//                .field("orderProductsByUuid.uuid_order", "orderProducts.uuid_order")
-//                .field("orderProductsByUuid.uuid_product", "orderProducts.uuid_product")
-//                .field("orderProductsByUuid.count", "orderProducts.count")
-//                .field("orderProductsByUuid.cost", "orderProducts.cost")
-
-//                .field("orderProductsByUuid.uuid", "orderProducts.uuid")
-//                .field("orderProductsByUuid.uuid_order", "orderProducts.uuid_order")
-//                .field("orderProductsByUuid.uuid_product", "orderProducts.uuid_product")
-//                .field("orderProductsByUuid.count", "orderProducts.count")
-//                .field("orderProductsByUuid.cost", "orderProducts.cost")
-
                 .byDefault()
                 .register();
 

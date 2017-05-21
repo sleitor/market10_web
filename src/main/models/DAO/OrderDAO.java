@@ -37,7 +37,7 @@ public class OrderDAO implements OrderInterface {
     @Override
     @Transactional
     public int create(EntOrder entOrder) {
-
+        entOrder.setUuid(null);
         manager.persist(entOrder);
         return (entOrder.getUuid() != null ? Math.toIntExact(entOrder.getUuid()) : 0);
     }

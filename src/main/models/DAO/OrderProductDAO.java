@@ -34,6 +34,7 @@ public class OrderProductDAO implements OrderProductInterface {
     @Override
     @Transactional
     public int create(EntOrderProduct entOrderProduct) {
+        entOrderProduct.setUuid(null);
         entityManager.persist(entOrderProduct);
         return (entOrderProduct.getUuid() != null ? Math.toIntExact(entOrderProduct.getUuid()) : 0);
     }

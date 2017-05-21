@@ -91,7 +91,7 @@ public class EntOrderProduct implements Serializable {
         return result;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "uuid_order", referencedColumnName = "uuid", nullable = false)
     public EntOrder getOrdersByUuidOrder() {
         return ordersByUuidOrder;

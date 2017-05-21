@@ -1,6 +1,7 @@
 package main.models.services;
 
 import ma.glasnost.orika.BoundMapperFacade;
+import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import main.models.DAO.OrderProductDAO;
@@ -53,8 +54,15 @@ public class OrderProductService implements OrderProductServiceInterface {
 
     @Override
     public int create(OrderProduct orderProduct) {
-        BoundMapperFacade<OrderProduct, EntOrderProduct> mapperFacade = factory.getMapperFacade(OrderProduct.class, EntOrderProduct.class);
-        return orderProductDAO.create(mapperFacade.map(orderProduct));
+        factory.classMap(OrderProduct.class, EntOrderProduct.class)
+                .field("uuid_order", "ordersByUuidOrder.uuid")
+                .field("uuid_product", "productsByUuidProduct.uuid")
+                .byDefault()
+                .register();
+
+
+        MapperFacade mapperFacade = factory.getMapperFacade();
+        return orderProductDAO.create(mapperFacade.map(orderProduct, EntOrderProduct.class));
     }
 
     @Override
