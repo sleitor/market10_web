@@ -70,7 +70,14 @@ public class CartController {
 
             Set<Product> cartProduct = new HashSet<>();
             for (Map.Entry entry : cart.entrySet()) {
-                cartProduct.add(productService.getByID((Long) entry.getKey()));
+                Product product = productService.getByID((Long) entry.getKey());
+                Integer quantityOfCart = (Integer) entry.getValue();
+                if (product.getQuantity() < quantityOfCart) {
+                    entry.setValue(--quantityOfCart);
+                    req.getSession().setAttribute("add", "Ошибка!!! Нет такого числа товаров в наличии!");
+                }
+                cartProduct.add(product);
+
             }
             req.getSession().setAttribute("cartProduct", cartProduct);
 
